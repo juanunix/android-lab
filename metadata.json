@@ -1,0 +1,6 @@
+{
+  "name": "Compose & MVI Architecture Lab",
+  "description": "Laboratorio interactivo de Jetpack Compose: Side-Effects y Arquitectura MVI canónica para Android moderno con simulaciones en vivo y código Kotlin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
