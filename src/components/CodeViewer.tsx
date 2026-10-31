@@ -33,7 +33,7 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLi
     return tokens.map((token, index) => {
       // Strings
       if (token.startsWith('"') && token.endsWith('"')) {
-        return <span key={index} className="text-emerald-400">{token}</span>;
+        return <span key={index} className="text-primary">{token}</span>;
       }
       // Annotations (@Composable, @OptIn, etc.)
       if (token.startsWith('@')) {
@@ -72,23 +72,23 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLi
   const lines = code.trim().split('\n');
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-[#0d1322] overflow-hidden text-sm shadow-xl">
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0a0e19] border-b border-slate-800/80">
+    <div className="rounded-xl bg-surface-lowest border-l-4 border-l-primary overflow-hidden text-sm ds-ambient">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></div>
-          <div className="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></div>
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></div>
-          <span className="ml-2 text-xs font-mono text-slate-400 font-medium">{title || 'Kotlin / Compose'}</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-rose-400/70 inline-block"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-300/70 inline-block"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-primary/80 inline-block"></div>
+          <span className="ml-2 text-xs font-mono text-on-surface-variant font-medium">{title || 'Kotlin / Compose'}</span>
         </div>
         <button
           onClick={handleCopy}
           aria-label="Copiar código"
-          className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/60 rounded-md transition-colors"
+          className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-on-surface hover:text-primary bg-surface-highest hover:bg-surface-high rounded-full transition-colors"
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-emerald-400">¡Copiado!</span>
+              <Check className="w-3.5 h-3.5 text-primary" />
+              <span className="text-primary">¡Copiado!</span>
             </>
           ) : (
             <>
@@ -108,9 +108,9 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLi
               return (
                 <tr
                   key={idx}
-                  className={`${isHighlighted ? 'bg-sky-500/10 -mx-4 px-4 border-l-2 border-sky-400' : ''} hover:bg-slate-800/30 transition-colors`}
+                  className={`${isHighlighted ? 'bg-primary/10 -mx-4 px-4 border-l-2 border-primary' : ''} hover:bg-surface-container/60 transition-colors`}
                 >
-                  <td className="w-8 select-none pr-4 text-right text-slate-600 text-xs tabular-nums font-mono">
+                  <td className="w-8 select-none pr-4 text-right text-on-surface-variant/40 text-xs tabular-nums font-mono">
                     {lineNum}
                   </td>
                   <td className="whitespace-pre">

@@ -122,7 +122,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070b14] text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-surface text-on-surface flex flex-col font-sans">
       {/* Top Bar with Lab Switcher & Language Switcher */}
       <Header
         activeLab={activeLab}
@@ -146,14 +146,14 @@ function AppContent() {
       ) : (
         <>
           {/* Hero Section */}
-          <section id="hero" className="border-b border-slate-800/80 bg-gradient-to-b from-[#0d1424] to-[#070b14] py-14 px-4 sm:px-6">
+          <section id="hero" className="border-b-0 bg-gradient-to-b from-surface-high via-surface to-surface-lowest py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl space-y-4">
             <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
               <span>{t.hero.kicker}</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white" style={{ textWrap: 'balance' }}>
+            <h1 className="text-4xl md:text-6xl font-display font-bold tracking-tight text-on-surface tracking-[-0.04em]" style={{ textWrap: 'balance' }}>
               {t.hero.title}
             </h1>
 
@@ -164,13 +164,13 @@ function AppContent() {
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => scrollToSection('catalog')}
-                className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/20"
+                className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(65,239,107,0.5)]"
               >
                 {t.hero.exploreBtn}
               </button>
               <button
                 onClick={() => setIsDecisionModalOpen(true)}
-                className="px-5 py-2.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl text-sm border border-slate-700 transition-all flex items-center gap-2"
+                className="px-6 py-2.5 bg-surface-high hover:bg-surface-highest text-on-surface font-semibold rounded-full text-sm transition-all flex items-center gap-2"
               >
                 <HelpCircle className="w-4 h-4 text-emerald-400" />
                 <span>{t.hero.whichToUseBtn}</span>
@@ -181,10 +181,10 @@ function AppContent() {
       </section>
 
       {/* Main Interactive Sandbox */}
-      <main id="catalog" className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-10 space-y-8 flex-1">
+      <main id="catalog" className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-16 space-y-16 flex-1">
         {/* Category Filters & Effect Tabs */}
         <div className="space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b-0 bg-transparent">
             <div>
               <h2 className="text-xl font-bold text-white flex items-center gap-2">
                 <Layers className="w-5 h-5 text-emerald-400" />
@@ -196,7 +196,7 @@ function AppContent() {
             </div>
 
             {/* Category Filter Buttons */}
-            <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800 text-xs self-start md:self-auto overflow-x-auto max-w-full">
+            <div className="flex items-center gap-1 p-1 bg-surface-high/60 rounded-full text-xs self-start md:self-auto overflow-x-auto max-w-full">
               {(
                 [
                   { id: 'all', label: t.catalog.categories.all },
@@ -211,7 +211,7 @@ function AppContent() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-3 py-1.5 rounded-md font-medium transition-colors whitespace-nowrap shrink-0 ${
                     selectedCategory === cat.id
-                      ? 'bg-slate-800 text-white shadow-sm border border-slate-700/60'
+                      ? 'bg-surface-highest text-on-surface shadow-sm'
                       : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
@@ -255,7 +255,7 @@ function AppContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Interactive Android Mockup & Logcat */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#0b1120] p-4 rounded-2xl border border-slate-800 shadow-xl space-y-4">
+            <div className="bg-surface-low p-4 rounded-3xl space-y-4">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -304,8 +304,8 @@ function AppContent() {
           {/* Right Column: Documentation, Kotlin Code, Parameters, Pitfalls */}
           <div className="lg:col-span-7 space-y-6">
             {/* Effect Description Card */}
-            <div className="bg-[#0b1120] p-6 rounded-2xl border border-slate-800 shadow-xl space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+            <div className="bg-surface-low p-6 rounded-3xl space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-4">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
                     <span>{currentEffect.categoryLabel}</span>
@@ -317,7 +317,7 @@ function AppContent() {
                   </h3>
                 </div>
 
-                <div className="text-xs text-slate-400 font-mono bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+                <div className="text-xs text-slate-400 font-mono bg-surface-container px-3 py-1.5 rounded-full">
                   {t.simulator.runtime}
                 </div>
               </div>
@@ -329,7 +329,7 @@ function AppContent() {
               {/* Kotlin Signature */}
               <div className="space-y-1">
                 <span className="text-xs font-mono text-slate-400">Firma Kotlin:</span>
-                <div className="p-3 rounded-xl bg-[#070b14] border border-slate-800 text-xs font-mono text-sky-300 overflow-x-auto leading-relaxed">
+                <div className="p-3 rounded-xl bg-surface-lowest text-xs font-mono text-sky-300 overflow-x-auto leading-relaxed">
                   {currentEffect.kotlinSignature}
                 </div>
               </div>
@@ -340,7 +340,7 @@ function AppContent() {
                   <span className="text-xs font-bold text-slate-300">
                     {t.simulator.parametersTitle}
                   </span>
-                  <div className="divide-y divide-slate-800 rounded-xl border border-slate-800 bg-[#070b14] overflow-hidden text-xs">
+                  <div className="rounded-xl bg-surface-lowest overflow-hidden text-xs">
                     {currentEffect.parameters.map((param) => (
                       <div key={param.name} className="p-3 flex flex-col sm:flex-row sm:items-start gap-2">
                         <div className="w-32 shrink-0">
@@ -373,7 +373,7 @@ function AppContent() {
 
                 {/* Snippet Tabs */}
                 {currentEffect.snippets.length > 1 && (
-                  <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-xs">
+                  <div className="flex items-center gap-1 bg-surface-high/60 p-0.5 rounded-full text-xs">
                     {currentEffect.snippets.map((snip, idx) => (
                       <button
                         key={idx}
@@ -407,7 +407,7 @@ function AppContent() {
             {/* Do's & Don'ts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* When to use */}
-              <div className="bg-[#0b1120] p-4 rounded-xl border border-emerald-950/80 bg-gradient-to-b from-emerald-950/20 to-transparent space-y-3">
+              <div className="bg-surface-low p-5 rounded-3xl bg-gradient-to-b from-emerald-950/25 to-transparent space-y-3">
                 <div className="flex items-center gap-2 text-emerald-400">
                   <CheckCircle className="w-4 h-4 shrink-0" />
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono">
@@ -425,7 +425,7 @@ function AppContent() {
               </div>
 
               {/* Pitfalls */}
-              <div className="bg-[#0b1120] p-4 rounded-xl border border-rose-950/80 bg-gradient-to-b from-rose-950/20 to-transparent space-y-3">
+              <div className="bg-surface-low p-5 rounded-3xl bg-gradient-to-b from-rose-950/20 to-transparent space-y-3">
                 <div className="flex items-center gap-2 text-rose-400">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono">
@@ -446,12 +446,12 @@ function AppContent() {
         </div>
 
         {/* Jetpack Compose Lifecycle Interactive Diagram */}
-        <section id="lifecycle" className="pt-8">
+        <section id="lifecycle" className="pt-16">
           <LifecycleDiagram onSelectEffect={handleSelectEffect} />
         </section>
 
         {/* Side-Effects Master Comparison Table */}
-        <section id="matrix" className="pt-8 space-y-4">
+        <section id="matrix" className="pt-16 space-y-6">
           <div>
             <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
               {t.matrix.kicker}
@@ -464,7 +464,7 @@ function AppContent() {
             </p>
           </div>
 
-          <div className="rounded-2xl border border-slate-800 bg-[#0b1120] overflow-hidden shadow-xl">
+          <div className="rounded-3xl bg-surface-low overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-[#080d19] border-b border-slate-800 text-slate-400 font-mono">
@@ -536,7 +536,7 @@ function AppContent() {
                             handleSelectEffect(eff.id);
                             scrollToSection('catalog');
                           }}
-                          className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 transition-colors text-[11px] font-mono"
+                          className="px-3 py-1 rounded-full bg-surface-highest hover:bg-surface-high text-on-surface transition-colors text-[11px] font-mono"
                         >
                           {t.matrix.viewInLab}
                         </button>
@@ -550,7 +550,7 @@ function AppContent() {
         </section>
 
         {/* Buenas Prácticas y Reglas de Oro */}
-        <section id="pitfalls" className="pt-8 pb-12 space-y-6">
+        <section id="pitfalls" className="pt-16 pb-24 space-y-8">
           <div>
             <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
               {t.pitfallsSection.kicker}
@@ -564,7 +564,7 @@ function AppContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-5 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">1</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule1Title}
@@ -574,7 +574,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">2</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule2Title}
@@ -584,7 +584,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">3</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule3Title}
@@ -594,7 +594,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">4</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule4Title}
@@ -610,7 +610,7 @@ function AppContent() {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-[#060a12] py-8 px-6 text-center text-xs text-slate-500">
+      <footer className="bg-surface-low py-10 px-6 text-center text-xs text-on-surface-variant">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>{t.footer.copy}</p>
           <div className="flex items-center gap-4 text-slate-400">

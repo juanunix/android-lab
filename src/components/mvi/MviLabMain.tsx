@@ -59,15 +59,15 @@ export const MviLabMain: React.FC = () => {
   }[language];
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-16">
       {/* Hero of MVI Lab */}
-      <section className="bg-gradient-to-b from-[#0f172a] via-[#0a0f1d] to-[#070b14] border-b border-slate-800/80 -mx-4 sm:-mx-6 px-4 sm:px-6 py-12">
+      <section className="bg-gradient-to-b from-surface-high via-surface to-surface-lowest -mx-4 sm:-mx-6 px-4 sm:px-6 py-16">
         <div className="max-w-6xl mx-auto space-y-4">
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <span>{tMain.kicker}</span>
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white" style={{ textWrap: 'balance' }}>
+          <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tight text-on-surface tracking-[-0.04em]" style={{ textWrap: 'balance' }}>
             {tMain.title}
           </h2>
 
@@ -78,13 +78,13 @@ export const MviLabMain: React.FC = () => {
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <a
               href="#simulator"
-              className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/20"
+              className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(65,239,107,0.5)]"
             >
               {tMain.exploreBtn}
             </a>
             <a
               href="#rules"
-              className="px-5 py-2.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl text-sm border border-slate-700 transition-all"
+              className="px-6 py-2.5 bg-surface-high hover:bg-surface-highest text-on-surface font-semibold rounded-full text-sm transition-all"
             >
               Reglas de Oro MVI
             </a>
@@ -163,8 +163,8 @@ export const MviLabMain: React.FC = () => {
         </div>
 
         {/* Active Concept Details */}
-        <div className="bg-[#0b1120] p-6 rounded-2xl border border-slate-800 shadow-xl space-y-5">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-4">
+        <div className="bg-surface-low p-6 rounded-3xl space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4">
             <div>
               <span className="text-xs font-mono text-emerald-400">
                 {activeConcept.badge}
@@ -173,7 +173,7 @@ export const MviLabMain: React.FC = () => {
                 {activeConcept.name}
               </h3>
             </div>
-            <span className="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-800">
+            <span className="text-xs font-mono text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-full">
               Directrices Canónicas MVI
             </span>
           </div>
@@ -201,7 +201,7 @@ export const MviLabMain: React.FC = () => {
 
           {/* Do's & Don'ts */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-[#070b14] border border-emerald-900/60 space-y-2">
+            <div className="p-4 rounded-xl bg-surface-lowest space-y-2">
               <span className="text-xs font-bold text-emerald-400 font-mono">
                 ✓ Buenas Prácticas (Do's)
               </span>
@@ -215,7 +215,7 @@ export const MviLabMain: React.FC = () => {
               </ul>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#070b14] border border-rose-900/60 space-y-2">
+            <div className="p-4 rounded-xl bg-surface-lowest space-y-2">
               <span className="text-xs font-bold text-rose-400 font-mono">
                 ✕ Errores y Antipatrones (Don'ts)
               </span>
@@ -254,7 +254,7 @@ export const MviLabMain: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-          <div className="p-4 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+          <div className="p-6 rounded-3xl bg-surface-low space-y-3">
             <span className="text-xs font-mono text-emerald-400 font-bold">Regla 1</span>
             <h4 className="font-bold text-white text-sm">Una sola función onAction()</h4>
             <p className="text-slate-300 leading-relaxed">
@@ -262,7 +262,7 @@ export const MviLabMain: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+          <div className="p-6 rounded-3xl bg-surface-low space-y-3">
             <span className="text-xs font-mono text-emerald-400 font-bold">Regla 2</span>
             <h4 className="font-bold text-white text-sm">Updates atómicos con _state.update</h4>
             <p className="text-slate-300 leading-relaxed">
@@ -270,7 +270,7 @@ export const MviLabMain: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+          <div className="p-6 rounded-3xl bg-surface-low space-y-3">
             <span className="text-xs font-mono text-emerald-400 font-bold">Regla 3</span>
             <h4 className="font-bold text-white text-sm">Channel para eventos de un solo uso</h4>
             <p className="text-slate-300 leading-relaxed">
@@ -278,7 +278,7 @@ export const MviLabMain: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+          <div className="p-6 rounded-3xl bg-surface-low space-y-3">
             <span className="text-xs font-mono text-emerald-400 font-bold">Regla 4</span>
             <h4 className="font-bold text-white text-sm">Orden Canónico: &lt;Screen&gt;Root y &lt;Screen&gt;Screen</h4>
             <p className="text-slate-300 leading-relaxed">
@@ -286,7 +286,7 @@ export const MviLabMain: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-2">
+          <div className="p-6 rounded-3xl bg-surface-low space-y-3">
             <span className="text-xs font-mono text-emerald-400 font-bold">Regla 5</span>
             <h4 className="font-bold text-white text-sm">UiText para desacoplar Context</h4>
             <p className="text-slate-300 leading-relaxed">
