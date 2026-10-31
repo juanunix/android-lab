@@ -3,6 +3,7 @@ import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles } from '
 import { useLanguage } from '../context/LanguageContext';
 import { Language } from '../i18n/types';
 import { APP_VERSION_LABEL } from '../config/version';
+import { SITE_NAME } from '../config/site';
 
 export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes';
 
@@ -45,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
           }}
           className="flex items-center gap-2 font-display text-lg font-bold tracking-tight text-on-surface whitespace-nowrap hover:text-brand transition-colors"
         >
-          <span>Compose & MVI Lab</span>
+          <span>{SITE_NAME}</span>
           <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-[10px] font-mono font-semibold tracking-wider text-brand">
             {APP_VERSION_LABEL}
           </span>

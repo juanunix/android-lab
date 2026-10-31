@@ -10,6 +10,7 @@ import { LogItem, EffectCategory } from './types/sideEffects';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { APP_VERSION_LABEL } from './config/version';
 import { Header, ActiveLab } from './components/Header';
+import { LoadingScreen } from './components/LoadingScreen';
 import { CodeViewer } from './components/CodeViewer';
 import { LogcatTerminal } from './components/LogcatTerminal';
 import { PhoneMockup } from './components/PhoneMockup';
@@ -148,6 +149,8 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-surface text-on-surface flex flex-col font-sans">
+      <LoadingScreen />
+
       {/* Top Bar with Lab Switcher & Language Switcher */}
       <Header
         activeLab={activeLab}

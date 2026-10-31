@@ -132,6 +132,26 @@
   animation: device-rotate 480ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@keyframes loader-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(340%);
+  }
+}
+
+.loader-sweep {
+  animation: loader-sweep 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-sweep {
+    animation: none;
+    width: 100%;
+  }
+}
+
 [class~="bg-[#050810]"],
 [class~="bg-[#060a12]"],
 [class~="bg-[#070b14]"] {
