@@ -38,6 +38,8 @@ export const MviScreenSimulator: React.FC = () => {
     { id: 'a-1', timestamp: '09:41:00', name: 'OnRefresh' },
   ]);
 
+  const [isRotating, setIsRotating] = useState(false);
+
   const [eventsChannel, setEventsChannel] = useState<MviEventItem[]>([]);
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
 
@@ -54,6 +56,8 @@ export const MviScreenSimulator: React.FC = () => {
       checkoutBtn: 'Finalizar Compra (Event)',
       refreshBtn: 'Refrescar Catálogo',
       rotateBtn: 'Simular Giro de Pantalla (Recreación Activity)',
+      portrait: 'Vertical',
+      landscape: 'Horizontal',
       stateInspectorTitle: 'StateFlow Inspector (Single State)',
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (One-Shot Flow)',
@@ -71,6 +75,8 @@ export const MviScreenSimulator: React.FC = () => {
       checkoutBtn: 'Finalizar Compra (Event)',
       refreshBtn: 'Atualizar Catálogo',
       rotateBtn: 'Simular Rotação de Tela (Recriação Activity)',
+      portrait: 'Retrato',
+      landscape: 'Paisagem',
       stateInspectorTitle: 'StateFlow Inspector (Estado Único)',
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (Fluxo Único)',
@@ -88,6 +94,8 @@ export const MviScreenSimulator: React.FC = () => {
       checkoutBtn: 'Checkout (Event)',
       refreshBtn: 'Refresh Catalog',
       rotateBtn: 'Simulate Screen Rotation (Activity Recreate)',
+      portrait: 'Portrait',
+      landscape: 'Landscape',
       stateInspectorTitle: 'StateFlow Inspector (Single State)',
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (One-Shot Flow)',
@@ -194,6 +202,7 @@ export const MviScreenSimulator: React.FC = () => {
   // Simulate device rotation (recreates Compose UI, tests State preservation and Channel non-replay)
   const handleRotateDevice = () => {
     setState((prev) => ({ ...prev, isDeviceRotated: !prev.isDeviceRotated }));
+    setIsRotating(true);
     dispatchAction('OnConfigurationChange', 'SCREEN_ROTATION');
   };
 
@@ -210,14 +219,27 @@ export const MviScreenSimulator: React.FC = () => {
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
       {/* Column 1: Simulated Android Phone with MVI UI */}
       <div className="lg:col-span-5 space-y-4">
-        <div className="bg-[#0b101e] p-3 sm:p-4 rounded-3xl border-2 border-slate-700/80 shadow-2xl relative">
-          <div className="rounded-2xl bg-[#0e1628] overflow-hidden border border-slate-700 flex flex-col h-[520px] shadow-inner relative">
+        <div
+          onAnimationEnd={(event) => {
+            if (event.target === event.currentTarget) setIsRotating(false);
+          }}
+          className={`mx-auto w-full bg-[#0b101e] p-3 sm:p-4 rounded-2xl border-2 border-slate-700/80 shadow-2xl relative transition-all duration-500 ease-out ${
+            state.isDeviceRotated ? 'max-w-[560px]' : 'max-w-[360px]'
+          } ${isRotating ? 'device-is-rotating' : ''}`}
+        >
+          <div
+            className={`rounded-2xl bg-[#0e1628] overflow-hidden border border-slate-700 flex flex-col shadow-inner relative transition-all duration-500 ease-out ${
+              state.isDeviceRotated ? 'h-[340px]' : 'h-[520px]'
+            }`}
+          >
             {/* Top Bar of Android Phone */}
             <div className="h-7 bg-slate-950 px-4 flex items-center justify-between text-[11px] font-mono text-slate-400 select-none border-b border-slate-800 shrink-0">
               <span>09:41</span>
               <div className="w-3.5 h-3.5 rounded-full bg-black border border-slate-800" />
               <div className="flex items-center gap-2">
-                <span className="text-[10px] text-emerald-400 font-mono">5G</span>
+                <span className="text-[10px] text-brand font-mono uppercase tracking-wider">
+                  {state.isDeviceRotated ? tSim.landscape : tSim.portrait}
+                </span>
                 <span className="text-[10px] text-slate-400">100%</span>
               </div>
             </div>
