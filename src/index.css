@@ -553,3 +553,7 @@ html[data-theme='sidi'] .site-header {
 html[data-theme='sidi'] .phone-device [class*="border-slate-"] {
   border-color: rgba(255, 255, 255, 0.12);
 }
+
+html[data-theme='sidi'] .code-surface {
+  --color-surface-low: #0e0e0e;
+}

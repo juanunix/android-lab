@@ -428,7 +428,7 @@ export const MviScreenSimulator: React.FC = () => {
             </span>
           </div>
 
-          <pre className="font-mono text-xs text-sky-300 bg-[#070b14] p-3 rounded-xl border border-slate-800 overflow-x-auto leading-relaxed max-h-44">
+          <pre className="code-surface font-mono text-xs text-sky-300 bg-[#070b14] p-3 rounded-xl border border-slate-800 overflow-x-auto leading-relaxed max-h-44">
             <code>
 {`ProductListState(
   searchQuery = "${state.searchQuery}",

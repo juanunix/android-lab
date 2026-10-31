@@ -40,7 +40,7 @@ export const LogcatTerminal: React.FC<LogcatTerminalProps> = ({ logs, onClear })
   };
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-[#0a0f1d] overflow-hidden flex flex-col h-72 shadow-lg">
+    <div className="code-surface rounded-xl border border-slate-800 bg-[#0a0f1d] overflow-hidden flex flex-col h-72 shadow-lg">
       <div className="flex items-center justify-between px-3.5 py-2 bg-[#0d1424] border-b border-slate-800/80">
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-emerald-400" />

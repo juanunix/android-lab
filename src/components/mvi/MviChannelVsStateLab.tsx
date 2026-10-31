@@ -380,7 +380,7 @@ if (state.showError) {
           {tLab.codeTitle}
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
-          <div className="p-3 bg-[#070b14] rounded-xl border border-emerald-900/60 space-y-1.5">
+          <div className="code-surface p-3 bg-[#070b14] rounded-xl border border-emerald-900/60 space-y-1.5">
             <span className="text-emerald-400 font-bold block text-[11px]">
               {tLab.canonicalCodeLabel}
             </span>
@@ -389,7 +389,7 @@ if (state.showError) {
             </pre>
           </div>
 
-          <div className="p-3 bg-[#070b14] rounded-xl border border-rose-900/60 space-y-1.5">
+          <div className="code-surface p-3 bg-[#070b14] rounded-xl border border-rose-900/60 space-y-1.5">
             <span className="text-rose-400 font-bold block text-[11px]">
               {tLab.antiCodeLabel}
             </span>
