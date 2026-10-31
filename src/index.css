@@ -557,3 +557,11 @@ html[data-theme='sidi'] .phone-device [class*="border-slate-"] {
 html[data-theme='sidi'] .code-surface {
   --color-surface-low: #0e0e0e;
 }
+
+html[data-theme='sidi'] .code-surface {
+  color: #e1e2e8;
+}
+
+html[data-theme='sidi'] .phone-device {
+  color: #f5f5f5;
+}

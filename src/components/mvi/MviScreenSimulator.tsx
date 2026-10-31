@@ -456,7 +456,7 @@ export const MviScreenSimulator: React.FC = () => {
             </span>
           </div>
 
-          <div className="space-y-1.5 max-h-36 overflow-y-auto font-mono text-xs">
+          <div className="code-surface space-y-1.5 max-h-36 overflow-y-auto font-mono text-xs">
             {actionsHistory.map((act) => (
               <div
                 key={act.id}
@@ -491,7 +491,7 @@ export const MviScreenSimulator: React.FC = () => {
             </span>
           </div>
 
-          <div className="space-y-1.5 max-h-36 overflow-y-auto font-mono text-xs">
+          <div className="code-surface space-y-1.5 max-h-36 overflow-y-auto font-mono text-xs">
             {eventsChannel.length === 0 ? (
               <p className="text-slate-500 text-xs py-2 text-center">
                 {tSim.noEvents}

@@ -354,7 +354,7 @@ if (state.showError) {
           </div>
         )}
 
-        <div className="p-3 bg-[#070b14] rounded-xl border border-slate-800 max-h-36 overflow-y-auto font-mono text-xs space-y-1.5">
+        <div className="code-surface p-3 bg-[#070b14] rounded-xl border border-slate-800 max-h-36 overflow-y-auto font-mono text-xs space-y-1.5">
           {snackbarHistory.length === 0 ? (
             <p className="text-slate-500 text-center py-4">
               {tLab.emptyHint}
