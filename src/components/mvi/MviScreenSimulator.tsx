@@ -241,7 +241,7 @@ export const MviScreenSimulator: React.FC = () => {
           onAnimationEnd={(event) => {
             if (event.target === event.currentTarget) setIsRotating(false);
           }}
-          className={`mx-auto w-full bg-[#0b101e] p-3 sm:p-4 rounded-2xl border-2 border-slate-700/80 shadow-2xl relative transition-all duration-500 ease-out ${
+          className={`phone-device mx-auto w-full bg-[#0b101e] p-3 sm:p-4 rounded-2xl border-2 border-slate-700/80 shadow-2xl relative transition-all duration-500 ease-out ${
             state.isDeviceRotated ? 'max-w-[560px]' : 'max-w-[360px]'
           } ${isRotating ? 'device-is-rotating' : ''}`}
         >

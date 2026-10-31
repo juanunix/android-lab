@@ -39,7 +39,7 @@ export const LoadingScreen: React.FC = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-surface transition-opacity duration-500 ${
+      className={`loading-screen fixed inset-0 z-[100] flex items-center justify-center bg-surface transition-opacity duration-500 ${
         leaving ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       role="status"
@@ -49,8 +49,8 @@ export const LoadingScreen: React.FC = () => {
 
       <div className="relative w-full max-w-sm px-8 space-y-6">
         <div className="flex items-center justify-center gap-3">
-          <div className="w-9 h-9 rounded-full border-2 border-brand/25 border-t-brand animate-spin" />
-          <span className="font-mono text-brand text-xs tracking-[0.3em] uppercase">Compose</span>
+          <div className="loading-spinner w-9 h-9 rounded-full border-2 border-brand/25 border-t-brand animate-spin" />
+          <span className="loading-brand font-mono text-brand text-xs tracking-[0.3em] uppercase">Compose</span>
         </div>
 
         <div className="text-center space-y-1">
@@ -58,7 +58,7 @@ export const LoadingScreen: React.FC = () => {
           <p className="ds-label text-on-surface-variant">{label}</p>
         </div>
 
-        <div className="h-[2px] w-full bg-surface-high overflow-hidden rounded-full">
+        <div className="loading-track h-[2px] w-full bg-surface-high overflow-hidden rounded-full">
           <div className="h-full w-1/3 bg-brand loader-sweep" />
         </div>
 

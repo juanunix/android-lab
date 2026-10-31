@@ -1,6 +1,7 @@
 import React from 'react';
-import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles } from 'lucide-react';
+import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles, Palette } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useDesignSystem } from '../context/ThemeContext';
 import { Language } from '../i18n/types';
 import { APP_VERSION_LABEL } from '../config/version';
 import { SITE_NAME } from '../config/site';
@@ -21,6 +22,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNavigateSection,
 }) => {
   const { language, setLanguage, t } = useLanguage();
+  const { designSystem, toggleDesignSystem } = useDesignSystem();
 
   const languages: { id: Language; label: string; flag: string }[] = [
     { id: 'en', label: 'EN', flag: '🇺🇸' },
@@ -44,6 +46,7 @@ export const Header: React.FC<HeaderProps> = ({
       rules: '5 Reglas',
       generate: 'Generar MVI',
       languagePrefix: 'Cambiar idioma a',
+      themeToggle: 'Cambiar design system',
     },
     pt: {
       mviTab: 'Arquitetura MVI',
@@ -54,6 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
       rules: '5 Regras',
       generate: 'Gerar MVI',
       languagePrefix: 'Trocar idioma para',
+      themeToggle: 'Trocar design system',
     },
     en: {
       mviTab: 'MVI Architecture',
@@ -64,11 +68,12 @@ export const Header: React.FC<HeaderProps> = ({
       rules: '5 Rules',
       generate: 'Generate MVI',
       languagePrefix: 'Switch language to',
+      themeToggle: 'Switch design system',
     },
   }[language];
 
   return (
-    <header className="flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-surface/80 backdrop-blur-2xl sticky top-0 z-40">
+    <header className="site-header flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-surface/80 backdrop-blur-2xl sticky top-0 z-40">
       {/* Zone 1: Single text element wordmark */}
       <div className="flex items-center gap-3 shrink-0">
         <a
@@ -212,6 +217,16 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Zone 3: Language Switcher + Primary Action */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <button
+          onClick={toggleDesignSystem}
+          title={headerLabels.themeToggle}
+          aria-label={headerLabels.themeToggle}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-surface-high/70 hover:bg-surface-highest text-xs font-semibold text-on-surface transition-colors"
+        >
+          <Palette className="w-3.5 h-3.5 text-brand" />
+          <span className="hidden lg:inline">{designSystem === 'sidi' ? 'SiDi' : 'Monolith'}</span>
+        </button>
+
         {/* Language Switcher Selector */}
         <div className="flex items-center gap-0.5 p-1 bg-surface-high/70 rounded-full">
           <Globe className="w-3.5 h-3.5 text-on-surface-variant ml-1 mr-0.5 hidden sm:inline" />

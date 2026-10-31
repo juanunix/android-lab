@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { LogItem, EffectCategory } from './types/sideEffects';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { APP_VERSION_LABEL } from './config/version';
 import { Header, ActiveLab } from './components/Header';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -640,7 +641,7 @@ function AppContent() {
       )}
 
       {/* Footer */}
-      <footer className="bg-surface-low py-10 px-6 text-center text-xs text-on-surface-variant">
+      <footer className="site-footer bg-surface-low py-10 px-6 text-center text-xs text-on-surface-variant">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>{t.footer.copy}</p>
           <div className="flex items-center gap-4 text-slate-400">
@@ -678,8 +679,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <AppContent />
-    </LanguageProvider>
+    <ThemeProvider>
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }

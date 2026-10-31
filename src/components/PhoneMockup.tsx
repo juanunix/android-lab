@@ -70,7 +70,7 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
           onAnimationEnd={(event) => {
             if (event.target === event.currentTarget) setIsRotating(false);
           }}
-          className={`relative w-full rounded-[36px] p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-[#0b101e] border-2 border-slate-700/80 shadow-2xl ring-1 ring-white/10 ${
+          className={`phone-device relative w-full rounded-[36px] p-3 bg-gradient-to-b from-slate-800 via-slate-900 to-[#0b101e] border-2 border-slate-700/80 shadow-2xl ring-1 ring-white/10 ${
             isRotating ? 'device-is-rotating' : ''
           }`}
         >

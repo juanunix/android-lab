@@ -80,7 +80,7 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLi
   const lines = code.trim().split('\n');
 
   return (
-    <div className="rounded-2xl bg-surface-lowest border-l-4 border-l-brand overflow-hidden text-sm ds-ambient">
+    <div className="code-surface rounded-2xl bg-surface-lowest border-l-4 border-l-brand overflow-hidden text-sm ds-ambient">
       <div className="flex items-center justify-between px-4 py-2.5 bg-surface-container">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-rose-400/70 inline-block"></div>
