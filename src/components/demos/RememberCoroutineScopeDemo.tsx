@@ -1,19 +1,76 @@
 import React, { useState, useRef } from 'react';
 import { ArrowDown, ArrowUp, Bell, MessageSquare, Loader2 } from 'lucide-react';
 import { LogItem } from '../../types/sideEffects';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface RememberCoroutineScopeDemoProps {
   onLog: (tag: string, level: LogItem['level'], message: string) => void;
 }
 
 export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProps> = ({ onLog }) => {
-  const [items] = useState(
-    Array.from({ length: 25 }, (_, i) => ({
-      id: i + 1,
-      title: `Elemento #${i + 1} de la lista LazyColumn`,
-      subtitle: `Datos cacheados en memoria local (índice ${i})`,
-    }))
-  );
+  const { language } = useLanguage();
+  const t = {
+    es: {
+      itemTitle: (n: number) => `Elemento #${n} de la lista LazyColumn`,
+      itemSubtitle: (i: number) => `Datos cacheados en memoria local (índice ${i})`,
+      scopeLabel: 'CoroutineScope:',
+      scopeBound: 'Atado al Composable',
+      activeJobs: 'Jobs activos:',
+      scrollBottom: 'Scroll a Fondo',
+      scrollTop: 'Scroll al Inicio',
+      snackbarBtn: 'Show Snackbar',
+      syncBtn: 'Sincronizar (IO)',
+      lazyTitle: 'LazyColumn (25 items):',
+      undo: 'DESHACER',
+      savedDb: '¡Acción guardada en base de datos!',
+      synced: '¡Datos sincronizados vía scope.launch!',
+      scrollDone: 'Animación de scroll completada en el CoroutineScope',
+      snackbarHidden: 'Snackbar ocultado. Corrutina finalizada.',
+      syncDone: 'Sincronización completada exitosamente',
+    },
+    pt: {
+      itemTitle: (n: number) => `Item #${n} da lista LazyColumn`,
+      itemSubtitle: (i: number) => `Dados em cache na memória local (índice ${i})`,
+      scopeLabel: 'CoroutineScope:',
+      scopeBound: 'Vinculado ao Composable',
+      activeJobs: 'Jobs ativos:',
+      scrollBottom: 'Rolar até o Fim',
+      scrollTop: 'Rolar para o Início',
+      snackbarBtn: 'Mostrar Snackbar',
+      syncBtn: 'Sincronizar (IO)',
+      lazyTitle: 'LazyColumn (25 itens):',
+      undo: 'DESFAZER',
+      savedDb: 'Ação salva no banco de dados!',
+      synced: 'Dados sincronizados via scope.launch!',
+      scrollDone: 'Animação de scroll concluída no CoroutineScope',
+      snackbarHidden: 'Snackbar ocultado. Corrotina finalizada.',
+      syncDone: 'Sincronização concluída com sucesso',
+    },
+    en: {
+      itemTitle: (n: number) => `Item #${n} from the LazyColumn list`,
+      itemSubtitle: (i: number) => `Data cached in local memory (index ${i})`,
+      scopeLabel: 'CoroutineScope:',
+      scopeBound: 'Tied to the Composable',
+      activeJobs: 'Active jobs:',
+      scrollBottom: 'Scroll to Bottom',
+      scrollTop: 'Scroll to Top',
+      snackbarBtn: 'Show Snackbar',
+      syncBtn: 'Sync (IO)',
+      lazyTitle: 'LazyColumn (25 items):',
+      undo: 'UNDO',
+      savedDb: 'Action saved to database!',
+      synced: 'Data synced via scope.launch!',
+      scrollDone: 'Scroll animation completed in CoroutineScope',
+      snackbarHidden: 'Snackbar hidden. Coroutine finished.',
+      syncDone: 'Synchronization completed successfully',
+    },
+  }[language];
+
+  const items = Array.from({ length: 25 }, (_, i) => ({
+    id: i + 1,
+    title: t.itemTitle(i + 1),
+    subtitle: t.itemSubtitle(i),
+  }));
 
   const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -38,7 +95,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
 
     setTimeout(() => {
       setActiveJobsCount((c) => Math.max(0, c - 1));
-      onLog('rememberCoroutineScope', 'INFO', `Animación de scroll completada en el CoroutineScope`);
+      onLog('rememberCoroutineScope', 'INFO', t.scrollDone);
     }, 600);
   };
 
@@ -51,7 +108,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
     setTimeout(() => {
       setSnackbarMessage(null);
       setActiveJobsCount((c) => Math.max(0, c - 1));
-      onLog('rememberCoroutineScope', 'INFO', `Snackbar ocultado. Corrutina finalizada.`);
+      onLog('rememberCoroutineScope', 'INFO', t.snackbarHidden);
     }, 3000);
   };
 
@@ -64,8 +121,8 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
     setTimeout(() => {
       setIsProcessing(false);
       setActiveJobsCount((c) => Math.max(0, c - 1));
-      onLog('rememberCoroutineScope', 'INFO', 'Sincronización completada exitosamente');
-      handleShowSnackbar('¡Datos sincronizados vía scope.launch!');
+      onLog('rememberCoroutineScope', 'INFO', t.syncDone);
+      handleShowSnackbar(t.synced);
     }, 1500);
   };
 
@@ -74,11 +131,11 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
       {/* Scope Status Badge */}
       <div className="bg-slate-900/90 rounded-lg p-2.5 border border-slate-800 text-xs flex items-center justify-between">
         <div>
-          <span className="text-slate-400">CoroutineScope:</span>
-          <span className="ml-1.5 text-emerald-400 font-semibold">Atado al Composable</span>
+          <span className="text-slate-400">{t.scopeLabel}</span>
+          <span className="ml-1.5 text-emerald-400 font-semibold">{t.scopeBound}</span>
         </div>
         <div className="flex items-center gap-1.5 font-mono text-[11px]">
-          <span className="text-slate-400">Jobs activos:</span>
+          <span className="text-slate-400">{t.activeJobs}</span>
           <span className="px-1.5 py-0.2 bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 rounded font-bold">
             {activeJobsCount}
           </span>
@@ -92,7 +149,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
           className="flex items-center justify-center gap-1.5 py-2 px-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700/80 transition-colors"
         >
           <ArrowDown className="w-3.5 h-3.5 text-sky-400" />
-          <span>Scroll a Fondo</span>
+          <span>{t.scrollBottom}</span>
         </button>
 
         <button
@@ -100,17 +157,17 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
           className="flex items-center justify-center gap-1.5 py-2 px-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700/80 transition-colors"
         >
           <ArrowUp className="w-3.5 h-3.5 text-sky-400" />
-          <span>Scroll al Inicio</span>
+          <span>{t.scrollTop}</span>
         </button>
       </div>
 
       <div className="grid grid-cols-2 gap-2 text-xs">
         <button
-          onClick={() => handleShowSnackbar('¡Acción guardada en base de datos!')}
+          onClick={() => handleShowSnackbar(t.savedDb)}
           className="flex items-center justify-center gap-1.5 py-2 px-2 bg-indigo-950/50 hover:bg-indigo-900/50 text-indigo-300 rounded-lg border border-indigo-800/60 transition-colors"
         >
           <Bell className="w-3.5 h-3.5" />
-          <span>Show Snackbar</span>
+          <span>{t.snackbarBtn}</span>
         </button>
 
         <button
@@ -123,7 +180,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
           ) : (
             <MessageSquare className="w-3.5 h-3.5" />
           )}
-          <span>Sincronizar (IO)</span>
+          <span>{t.syncBtn}</span>
         </button>
       </div>
 
@@ -133,7 +190,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
         className="flex-1 overflow-y-auto space-y-1.5 bg-slate-950/60 p-2 rounded-lg border border-slate-800/70"
       >
         <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wide">
-          LazyColumn (25 items):
+          {t.lazyTitle}
         </span>
         {items.map((item) => (
           <div
@@ -150,7 +207,7 @@ export const RememberCoroutineScopeDemo: React.FC<RememberCoroutineScopeDemoProp
       {snackbarMessage && (
         <div className="absolute bottom-1 left-2 right-2 bg-slate-800 text-slate-100 p-2.5 rounded-lg border border-slate-700 shadow-xl flex items-center justify-between text-xs animate-in fade-in slide-in-from-bottom-2 duration-200">
           <span>{snackbarMessage}</span>
-          <span className="text-[10px] text-emerald-400 font-mono font-bold">DESHACER</span>
+          <span className="text-[10px] text-emerald-400 font-mono font-bold">{t.undo}</span>
         </div>
       )}
     </div>

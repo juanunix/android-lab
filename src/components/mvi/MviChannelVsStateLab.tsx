@@ -26,6 +26,45 @@ export const MviChannelVsStateLab: React.FC = () => {
       goodVerdict: '✓ ¡Correcto! El Channel se vació al ser consumido. Girar la pantalla NO disparó un segundo Snackbar.',
       badVerdict: '✕ ¡Bug de repetición! Como el booleano sigue en el State, la nueva Activity al recomponer volvió a disparar el Snackbar.',
       codeTitle: 'Diferencia en el Código Kotlin:',
+      kicker: 'Laboratorio Comparativo de Arquitectura',
+      recommended: 'RECOMENDADO',
+      antiPattern: 'ANTIPATRÓN',
+      rotationsLabel: 'Rotaciones simuladas:',
+      recordsLabel: 'registros',
+      emptyHint: 'Presiona "Disparar Error" y luego "Girar Pantalla" para observar el comportamiento.',
+      canonicalCodeLabel: '✓ Padrón Canónico (Channel)',
+      antiCodeLabel: '✕ Antipadrón (Boolean en State)',
+      logFromState: 'Snackbar mostrado (desde State.showError = true)',
+      logFromChannel: 'Snackbar consumido (Channel.send -> ObserveAsEvents)',
+      logBug: 'BUG! Pantalla girada -> State re-leído -> Snackbar REPETIDO',
+      logChannel: 'Pantalla girada -> Channel vacío -> Ningún snackbar duplicado',
+      goodCode: `// ViewModel
+private val _events = Channel<ScreenEvent>()
+val events = _events.receiveAsFlow()
+
+fun onError() {
+    viewModelScope.launch {
+        _events.send(ScreenEvent.ShowError)
+    }
+}
+
+// UI (ObserveAsEvents)
+ObserveAsEvents(viewModel.events) { event ->
+    snackbarHostState.showSnackbar("Error")
+}`,
+      badCode: `// State
+data class ScreenState(
+    val showError: Boolean = false // ¡BUG!
+)
+
+// La UI se recompone al girar
+if (state.showError) {
+    LaunchedEffect(state.showError) {
+        snackbarHostState.showSnackbar("Error")
+        // Debes reiniciarlo manualmente
+        // o se repetirá al girar
+    }
+}`,
     },
     pt: {
       title: 'O Grande Dilema: Channel vs State para Eventos Únicos',
@@ -42,6 +81,45 @@ export const MviChannelVsStateLab: React.FC = () => {
       goodVerdict: '✓ Correto! O Channel foi esvaziado após o consumo. Girar a tela NÃO disparou um segundo Snackbar.',
       badVerdict: '✕ Bug de repetição! Como o booleano permaneceu no State, a nova Activity disparou o Snackbar novamente.',
       codeTitle: 'Diferença no Código Kotlin:',
+      kicker: 'Laboratório Comparativo de Arquitetura',
+      recommended: 'RECOMENDADO',
+      antiPattern: 'ANTIPADRÃO',
+      rotationsLabel: 'Rotações simuladas:',
+      recordsLabel: 'registros',
+      emptyHint: 'Pressione "Disparar Erro" e depois "Girar Tela" para observar o comportamento.',
+      canonicalCodeLabel: '✓ Padrão Canônico (Channel)',
+      antiCodeLabel: '✕ Antipadrão (Boolean no State)',
+      logFromState: 'Snackbar exibido (de State.showError = true)',
+      logFromChannel: 'Snackbar consumido (Channel.send -> ObserveAsEvents)',
+      logBug: 'BUG! Tela girada -> State relido -> Snackbar REPETIDO',
+      logChannel: 'Tela girada -> Channel vazio -> Nenhum snackbar duplicado',
+      goodCode: `// ViewModel
+private val _events = Channel<ScreenEvent>()
+val events = _events.receiveAsFlow()
+
+fun onError() {
+    viewModelScope.launch {
+        _events.send(ScreenEvent.ShowError)
+    }
+}
+
+// UI (ObserveAsEvents)
+ObserveAsEvents(viewModel.events) { event ->
+    snackbarHostState.showSnackbar("Error")
+}`,
+      badCode: `// State
+data class ScreenState(
+    val showError: Boolean = false // BUG!
+)
+
+// A UI recompõe ao girar
+if (state.showError) {
+    LaunchedEffect(state.showError) {
+        snackbarHostState.showSnackbar("Error")
+        // Você precisa reiniciar manualmente
+        // ou ele se repetirá ao girar
+    }
+}`,
     },
     en: {
       title: 'The Great Debate: Channel vs State for One-Shot Events',
@@ -58,6 +136,45 @@ export const MviChannelVsStateLab: React.FC = () => {
       goodVerdict: '✓ Clean! The Channel emptied after delivery. Screen rotation produced ZERO duplicate Snackbars.',
       badVerdict: '✕ Replay Bug! Because the flag remained in State, the newly recreated Activity re-read and re-displayed the Snackbar.',
       codeTitle: 'Kotlin Code Comparison:',
+      kicker: 'Architecture Comparison Lab',
+      recommended: 'RECOMMENDED',
+      antiPattern: 'ANTI-PATTERN',
+      rotationsLabel: 'Simulated rotations:',
+      recordsLabel: 'records',
+      emptyHint: 'Press "Trigger Error" and then "Rotate Screen" to observe the behavior.',
+      canonicalCodeLabel: '✓ Canonical Pattern (Channel)',
+      antiCodeLabel: '✕ Anti-pattern (Boolean in State)',
+      logFromState: 'Snackbar shown (from State.showError = true)',
+      logFromChannel: 'Snackbar consumed (Channel.send -> ObserveAsEvents)',
+      logBug: 'BUG! Screen rotated -> State re-read -> Snackbar REPLAYED',
+      logChannel: 'Screen rotated -> Channel empty -> No duplicate snackbar',
+      goodCode: `// ViewModel
+private val _events = Channel<ScreenEvent>()
+val events = _events.receiveAsFlow()
+
+fun onError() {
+    viewModelScope.launch {
+        _events.send(ScreenEvent.ShowError)
+    }
+}
+
+// UI (ObserveAsEvents)
+ObserveAsEvents(viewModel.events) { event ->
+    snackbarHostState.showSnackbar("Error")
+}`,
+      badCode: `// State
+data class ScreenState(
+    val showError: Boolean = false // BUG!
+)
+
+// UI recomposes on rotation
+if (state.showError) {
+    LaunchedEffect(state.showError) {
+        snackbarHostState.showSnackbar("Error")
+        // You must reset it manually
+        // or it will replay on rotation
+    }
+}`,
     },
   }[language];
 
@@ -66,13 +183,13 @@ export const MviChannelVsStateLab: React.FC = () => {
     if (architectureApproach === 'bad_state') {
       setStateShowError(true);
       setSnackbarHistory((prev) => [
-        `[${timestamp}] Snackbar mostrado (desde State.showError = true)`,
+        `[${timestamp}] ${tLab.logFromState}`,
         ...prev,
       ]);
     } else {
       setChannelEventConsumed(true);
       setSnackbarHistory((prev) => [
-        `[${timestamp}] Snackbar consumido (Channel.send -> ObserveAsEvents)`,
+        `[${timestamp}] ${tLab.logFromChannel}`,
         ...prev,
       ]);
     }
@@ -86,12 +203,12 @@ export const MviChannelVsStateLab: React.FC = () => {
     if (architectureApproach === 'bad_state' && stateShowError) {
       // THE BUG HAPPENS! The Activity recreates and re-reads state.showError = true
       setSnackbarHistory((prev) => [
-        `[${timestamp}] ¡BUG! Pantalla girada -> State re-leído -> Snackbar REPETIDO #${nextRot}`,
+        `[${timestamp}] ${tLab.logBug} #${nextRot}`,
         ...prev,
       ]);
     } else {
       setSnackbarHistory((prev) => [
-        `[${timestamp}] Pantalla girada #${nextRot} -> Channel vacío -> Ningún snackbar duplicado`,
+        `[${timestamp}] ${tLab.logChannel} #${nextRot}`,
         ...prev,
       ]);
     }
@@ -109,7 +226,7 @@ export const MviChannelVsStateLab: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Laboratorio Comparativo de Arquitectura
+            {tLab.kicker}
           </span>
           <h3 className="text-xl font-bold text-white mt-0.5">
             {tLab.title}
@@ -146,7 +263,7 @@ export const MviChannelVsStateLab: React.FC = () => {
               {tLab.approachGood}
             </span>
             <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">
-              RECOMENDADO
+              {tLab.recommended}
             </span>
           </div>
           <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
@@ -170,7 +287,7 @@ export const MviChannelVsStateLab: React.FC = () => {
               {tLab.approachBad}
             </span>
             <span className="text-[10px] font-mono text-rose-400 bg-rose-950 px-2 py-0.5 rounded border border-rose-800">
-              ANTIPATRÓN
+              {tLab.antiPattern}
             </span>
           </div>
           <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">
@@ -198,7 +315,7 @@ export const MviChannelVsStateLab: React.FC = () => {
         </button>
 
         <span className="text-xs font-mono text-slate-400 ml-auto">
-          Rotaciones simuladas: <strong className="text-white">{rotationCount}</strong>
+          {tLab.rotationsLabel} <strong className="text-white">{rotationCount}</strong>
         </span>
       </div>
 
@@ -209,7 +326,7 @@ export const MviChannelVsStateLab: React.FC = () => {
             {tLab.replaysTitle}
           </span>
           <span className="text-[11px] font-mono text-slate-500">
-            {snackbarHistory.length} registros
+            {snackbarHistory.length} {tLab.recordsLabel}
           </span>
         </div>
 
@@ -240,7 +357,7 @@ export const MviChannelVsStateLab: React.FC = () => {
         <div className="p-3 bg-[#070b14] rounded-xl border border-slate-800 max-h-36 overflow-y-auto font-mono text-xs space-y-1.5">
           {snackbarHistory.length === 0 ? (
             <p className="text-slate-500 text-center py-4">
-              Presiona "Disparar Error" y luego "Girar Pantalla" para observar el comportamiento.
+              {tLab.emptyHint}
             </p>
           ) : (
             snackbarHistory.map((item, idx) => (
@@ -265,44 +382,19 @@ export const MviChannelVsStateLab: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
           <div className="p-3 bg-[#070b14] rounded-xl border border-emerald-900/60 space-y-1.5">
             <span className="text-emerald-400 font-bold block text-[11px]">
-              ✓ Padrón Canónico (Channel)
+              {tLab.canonicalCodeLabel}
             </span>
             <pre className="text-slate-300 leading-relaxed overflow-x-auto text-[11px]">
-{`// ViewModel
-private val _events = Channel<ScreenEvent>()
-val events = _events.receiveAsFlow()
-
-fun onError() {
-    viewModelScope.launch {
-        _events.send(ScreenEvent.ShowError)
-    }
-}
-
-// UI (ObserveAsEvents)
-ObserveAsEvents(viewModel.events) { event ->
-    snackbarHostState.showSnackbar("Error")
-}`}
+              {tLab.goodCode}
             </pre>
           </div>
 
           <div className="p-3 bg-[#070b14] rounded-xl border border-rose-900/60 space-y-1.5">
             <span className="text-rose-400 font-bold block text-[11px]">
-              ✕ Antipadrón (Boolean en State)
+              {tLab.antiCodeLabel}
             </span>
             <pre className="text-slate-400 leading-relaxed overflow-x-auto text-[11px]">
-{`// State
-data class ScreenState(
-    val showError: Boolean = false // ¡BUG!
-)
-
-// UI Recomposes on Rotation
-if (state.showError) {
-    LaunchedEffect(state.showError) {
-        snackbarHostState.showSnackbar("Error")
-        // Necesitas resetear a mano
-        // o se repetirá al girar
-    }
-}`}
+              {tLab.badCode}
             </pre>
           </div>
         </div>

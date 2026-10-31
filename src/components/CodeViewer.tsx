@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Check, Copy } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CodeViewerProps {
   code: string;
@@ -8,7 +9,14 @@ interface CodeViewerProps {
 }
 
 export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLines = [] }) => {
+  const { language } = useLanguage();
   const [copied, setCopied] = useState(false);
+
+  const labels = {
+    es: { copy: 'Copiar', copied: '¡Copiado!', aria: 'Copiar código' },
+    pt: { copy: 'Copiar', copied: 'Copiado!', aria: 'Copiar código' },
+    en: { copy: 'Copy', copied: 'Copied!', aria: 'Copy code' },
+  }[language];
 
   const handleCopy = async () => {
     try {
@@ -82,18 +90,18 @@ export const CodeViewer: React.FC<CodeViewerProps> = ({ code, title, highlightLi
         </div>
         <button
           onClick={handleCopy}
-          aria-label="Copiar código"
+          aria-label={labels.aria}
           className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-on-surface hover:text-brand bg-surface-highest hover:bg-surface-high rounded-full transition-colors"
         >
           {copied ? (
             <>
               <Check className="w-3.5 h-3.5 text-brand" />
-              <span className="text-brand">¡Copiado!</span>
+              <span className="text-brand">{labels.copied}</span>
             </>
           ) : (
             <>
               <Copy className="w-3.5 h-3.5" />
-              <span>Copiar</span>
+              <span>{labels.copy}</span>
             </>
           )}
         </button>

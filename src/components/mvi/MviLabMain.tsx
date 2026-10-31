@@ -37,6 +37,42 @@ export const MviLabMain: React.FC = () => {
       conceptsTitle: 'Pilares Arquitectónicos de MVI',
       rulesTitle: 'Las 5 Reglas de Oro de la Arquitectura MVI',
       exploreBtn: 'Explorar Simulador',
+      rulesBtn: 'Reglas de Oro MVI',
+      simulatorKicker: 'Simulador de Producción',
+      simulatorTitle: 'MVI en Acción en una Pantalla Real de Android',
+      simulatorDesc:
+        'Interactúa con la tienda Pixel: busca productos, añade favoritos, agrega al carrito y observa el StateFlow mutar atómicamente mientras los eventos viajan por el Channel.',
+      fundamentalsKicker: 'Fundamentos Detallados',
+      fundamentalsDesc:
+        'Haz clic en cada componente para ver las directrices canónicas de MVI, buenas prácticas y ejemplos en Kotlin.',
+      canonicalBadge: 'Directrices Canónicas MVI',
+      implementationLabel: 'Implementación en Kotlin:',
+      dosTitle: 'Buenas Prácticas (Do’s)',
+      dontsTitle: 'Errores y Antipatrones (Don’ts)',
+      definitiveKicker: 'Guía Definitiva',
+      rulePrefix: 'Regla',
+      rules: [
+        {
+          title: 'Una sola función onAction()',
+          desc: 'No expongas múltiples métodos públicos en tu ViewModel. Toda interacción de la UI viaja a través de un único fun onAction(action: ScreenAction) en un when exhaustivo.',
+        },
+        {
+          title: 'Updates atómicos con _state.update',
+          desc: 'Nunca uses _state.value = _state.value.copy(...). Usa siempre _state.update { it.copy(...) } para proteger la concurrencia de corrutinas contra condiciones de carrera.',
+        },
+        {
+          title: 'Channel para eventos de un solo uso',
+          desc: 'Nunca guardes flags booleanos de navegación o snackbar en el State. Envíalos por un Channel<ScreenEvent> para erradicar el bug de repetición al girar la pantalla.',
+        },
+        {
+          title: 'Orden Canónico: <Screen>Root y <Screen>Screen',
+          desc: 'En el mismo archivo <Screen>Screen.kt: 1. <Screen>Root (ViewModel, eventos y ciclo de vida), 2. <Screen>Screen (stateless puro con state y onAction) y 3. <Screen>ScreenPreview.',
+        },
+        {
+          title: 'UiText para desacoplar Context',
+          desc: 'Nunca inyectes Android Context en tu ViewModel para resolver strings. Usa la abstracción UiText.StringResource y resuélvela en Compose mediante .asString().',
+        },
+      ],
     },
     pt: {
       kicker: 'Arquitetura Android & KMP Moderna',
@@ -46,6 +82,42 @@ export const MviLabMain: React.FC = () => {
       conceptsTitle: 'Pilares Arquiteturais do MVI',
       rulesTitle: 'Os 5 Mandamentos da Arquitetura MVI',
       exploreBtn: 'Explorar Simulador',
+      rulesBtn: 'Regras de Ouro MVI',
+      simulatorKicker: 'Simulador de Produção',
+      simulatorTitle: 'MVI em Ação em uma Tela Real de Android',
+      simulatorDesc:
+        'Interaja com a loja Pixel: busque produtos, adicione favoritos, coloque no carrinho e observe o StateFlow mudar atomicamente enquanto os eventos viajam pelo Channel.',
+      fundamentalsKicker: 'Fundamentos Detalhados',
+      fundamentalsDesc:
+        'Clique em cada componente para ver as diretrizes canônicas de MVI, boas práticas e exemplos em Kotlin.',
+      canonicalBadge: 'Diretrizes Canônicas MVI',
+      implementationLabel: 'Implementação em Kotlin:',
+      dosTitle: 'Boas Práticas (Do’s)',
+      dontsTitle: 'Erros e Antipadrões (Don’ts)',
+      definitiveKicker: 'Guia Definitivo',
+      rulePrefix: 'Regra',
+      rules: [
+        {
+          title: 'Uma única função onAction()',
+          desc: 'Não exponha múltiplos métodos públicos no seu ViewModel. Toda interação da UI passa por um único fun onAction(action: ScreenAction) em um when exaustivo.',
+        },
+        {
+          title: 'Updates atômicos com _state.update',
+          desc: 'Nunca use _state.value = _state.value.copy(...). Use sempre _state.update { it.copy(...) } para proteger a concorrência de corrotinas contra condições de corrida.',
+        },
+        {
+          title: 'Channel para eventos de uso único',
+          desc: 'Nunca guarde flags booleanos de navegação ou snackbar no State. Envie-os por um Channel<ScreenEvent> para eliminar o bug de repetição ao girar a tela.',
+        },
+        {
+          title: 'Ordem Canônica: <Screen>Root e <Screen>Screen',
+          desc: 'No mesmo arquivo <Screen>Screen.kt: 1. <Screen>Root (ViewModel, eventos e ciclo de vida), 2. <Screen>Screen (stateless puro com state e onAction) e 3. <Screen>ScreenPreview.',
+        },
+        {
+          title: 'UiText para desacoplar Context',
+          desc: 'Nunca injete Android Context no ViewModel para resolver strings. Use a abstração UiText.StringResource e resolva no Compose com .asString().',
+        },
+      ],
     },
     en: {
       kicker: 'Modern Android & KMP Architecture',
@@ -55,6 +127,42 @@ export const MviLabMain: React.FC = () => {
       conceptsTitle: 'Core MVI Architectural Pillars',
       rulesTitle: 'The 5 Golden Rules of MVI Architecture',
       exploreBtn: 'Explore Simulator',
+      rulesBtn: 'MVI Golden Rules',
+      simulatorKicker: 'Production Simulator',
+      simulatorTitle: 'MVI in Action on a Real Android Screen',
+      simulatorDesc:
+        'Interact with the Pixel store: search products, add favorites, add to cart, and watch StateFlow mutate atomically while events travel through the Channel.',
+      fundamentalsKicker: 'Detailed Fundamentals',
+      fundamentalsDesc:
+        'Click each component to see canonical MVI guidelines, best practices, and Kotlin examples.',
+      canonicalBadge: 'Canonical MVI Guidelines',
+      implementationLabel: 'Kotlin implementation:',
+      dosTitle: 'Best Practices (Do’s)',
+      dontsTitle: 'Errors & Anti-patterns (Don’ts)',
+      definitiveKicker: 'Definitive Guide',
+      rulePrefix: 'Rule',
+      rules: [
+        {
+          title: 'A single onAction() function',
+          desc: 'Do not expose multiple public methods on your ViewModel. Every UI interaction travels through a single fun onAction(action: ScreenAction) in an exhaustive when.',
+        },
+        {
+          title: 'Atomic updates with _state.update',
+          desc: 'Never use _state.value = _state.value.copy(...). Always use _state.update { it.copy(...) } to protect coroutine concurrency against race conditions.',
+        },
+        {
+          title: 'Channel for one-shot events',
+          desc: 'Never store boolean navigation or snackbar flags in State. Send them through a Channel<ScreenEvent> to eliminate the replay bug on screen rotation.',
+        },
+        {
+          title: 'Canonical order: <Screen>Root and <Screen>Screen',
+          desc: 'In the same <Screen>Screen.kt file: 1. <Screen>Root (ViewModel, events, lifecycle), 2. <Screen>Screen (pure stateless UI with state and onAction), and 3. <Screen>ScreenPreview.',
+        },
+        {
+          title: 'UiText to decouple Context',
+          desc: 'Never inject Android Context into your ViewModel to resolve strings. Use the UiText.StringResource abstraction and resolve it in Compose with .asString().',
+        },
+      ],
     },
   }[language];
 
@@ -86,7 +194,7 @@ export const MviLabMain: React.FC = () => {
               href="#rules"
               className="px-6 py-2.5 bg-surface-high hover:bg-surface-highest text-on-surface font-semibold rounded-full text-sm transition-all"
             >
-              Reglas de Oro MVI
+              {tMain.rulesBtn}
             </a>
           </div>
         </div>
@@ -101,13 +209,13 @@ export const MviLabMain: React.FC = () => {
       <section id="simulator" className="space-y-4">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Simulador de Producción
+            {tMain.simulatorKicker}
           </span>
           <h3 className="text-2xl font-bold text-white mt-0.5">
-            MVI en Acción en una Pantalla Real de Android
+            {tMain.simulatorTitle}
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Interactúa con la tienda Pixel: busca productos, añade favoritos, agrega al carrito y observa el StateFlow mutar atómicamente mientras los eventos viajan por el Channel.
+            {tMain.simulatorDesc}
           </p>
         </div>
 
@@ -123,13 +231,13 @@ export const MviLabMain: React.FC = () => {
       <section className="space-y-6">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Fundamentos Detallados
+            {tMain.fundamentalsKicker}
           </span>
           <h3 className="text-2xl font-bold text-white mt-0.5">
             {tMain.conceptsTitle}
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            Haz clic en cada componente para ver las directrices canónicas de MVI, buenas prácticas y ejemplos en Kotlin.
+            {tMain.fundamentalsDesc}
           </p>
         </div>
 
@@ -174,7 +282,7 @@ export const MviLabMain: React.FC = () => {
               </h3>
             </div>
             <span className="text-xs font-mono text-on-surface-variant bg-surface-container px-3 py-1.5 rounded-full">
-              Directrices Canónicas MVI
+              {tMain.canonicalBadge}
             </span>
           </div>
 
@@ -192,7 +300,7 @@ export const MviLabMain: React.FC = () => {
 
           {/* Code Viewer */}
           <div className="space-y-2">
-            <span className="text-xs font-mono text-slate-400">Implementación en Kotlin:</span>
+            <span className="text-xs font-mono text-slate-400">{tMain.implementationLabel}</span>
             <CodeViewer
               title={`${activeConcept.name}.kt`}
               code={activeConcept.kotlinCode}
@@ -203,7 +311,7 @@ export const MviLabMain: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-xl bg-surface-lowest space-y-2">
               <span className="text-xs font-bold text-emerald-400 font-mono">
-                ✓ Buenas Prácticas (Do's)
+                ✓ {tMain.dosTitle}
               </span>
               <ul className="space-y-1.5 text-xs text-slate-300">
                 {activeConcept.dos.map((d, i) => (
@@ -217,7 +325,7 @@ export const MviLabMain: React.FC = () => {
 
             <div className="p-4 rounded-xl bg-surface-lowest space-y-2">
               <span className="text-xs font-bold text-rose-400 font-mono">
-                ✕ Errores y Antipatrones (Don'ts)
+                ✕ {tMain.dontsTitle}
               </span>
               <ul className="space-y-1.5 text-xs text-slate-300">
                 {activeConcept.donts.map((d, i) => (
@@ -246,7 +354,7 @@ export const MviLabMain: React.FC = () => {
       <section id="rules" className="space-y-4 pt-4">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Guía Definitiva
+            {tMain.definitiveKicker}
           </span>
           <h3 className="text-2xl font-bold text-white mt-0.5">
             {tMain.rulesTitle}
@@ -254,45 +362,15 @@ export const MviLabMain: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-          <div className="p-6 rounded-2xl bg-surface-low space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold">Regla 1</span>
-            <h4 className="font-bold text-white text-sm">Una sola función onAction()</h4>
-            <p className="text-slate-300 leading-relaxed">
-              No expongas múltiples métodos públicos en tu ViewModel. Toda interacción de la UI viaja a través de un único <code className="text-sky-300 font-mono">fun onAction(action: ScreenAction)</code> en un when exhaustivo.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-surface-low space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold">Regla 2</span>
-            <h4 className="font-bold text-white text-sm">Updates atómicos con _state.update</h4>
-            <p className="text-slate-300 leading-relaxed">
-              Nunca uses <code className="text-rose-400 font-mono">_state.value = _state.value.copy(...)</code>. Usa siempre <code className="text-emerald-400 font-mono">_state.update &#123; it.copy(...) &#125;</code> para proteger la concurrencia de corrutinas contra condiciones de carrera.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-surface-low space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold">Regla 3</span>
-            <h4 className="font-bold text-white text-sm">Channel para eventos de un solo uso</h4>
-            <p className="text-slate-300 leading-relaxed">
-              Nunca guardes flags booleanos de navegación o snackbar en el State. Envíalos por un <code className="text-sky-300 font-mono">Channel&lt;ScreenEvent&gt;</code> para erradicar el bug de repetición al girar la pantalla.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-surface-low space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold">Regla 4</span>
-            <h4 className="font-bold text-white text-sm">Orden Canónico: &lt;Screen&gt;Root y &lt;Screen&gt;Screen</h4>
-            <p className="text-slate-300 leading-relaxed">
-              En el mismo archivo <code className="text-sky-300 font-mono">&lt;Screen&gt;Screen.kt</code>: 1. <code className="text-sky-300 font-mono">&lt;Screen&gt;Root</code> (ViewModel, eventos y ciclo de vida), 2. <code className="text-sky-300 font-mono">&lt;Screen&gt;Screen</code> (stateless puro con state y onAction), y 3. <code className="text-sky-300 font-mono">&lt;Screen&gt;ScreenPreview</code>.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-surface-low space-y-3">
-            <span className="text-xs font-mono text-emerald-400 font-bold">Regla 5</span>
-            <h4 className="font-bold text-white text-sm">UiText para desacoplar Context</h4>
-            <p className="text-slate-300 leading-relaxed">
-              Nunca inyectes Android Context en tu ViewModel para resolver strings. Usa la abstracción <code className="text-sky-300 font-mono">UiText.StringResource</code> y resuélvela en Compose mediante <code className="text-sky-300 font-mono">.asString()</code>.
-            </p>
-          </div>
+          {tMain.rules.map((rule, index) => (
+            <div key={rule.title} className="p-6 rounded-2xl bg-surface-low space-y-3">
+              <span className="text-xs font-mono text-emerald-400 font-bold">
+                {tMain.rulePrefix} {index + 1}
+              </span>
+              <h4 className="font-bold text-white text-sm">{rule.title}</h4>
+              <p className="text-slate-300 leading-relaxed">{rule.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
     </div>

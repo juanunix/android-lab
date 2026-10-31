@@ -48,6 +48,8 @@ export const LaunchedEffectDemo: React.FC<LaunchedEffectDemoProps> = ({ onLog })
       cancelledStatus: 'Cancelada (Job descartado)',
       completedStatus: 'Completada con éxito',
       idleStatus: 'Inactiva',
+      resetLog: 'Temporizador reiniciado',
+      resetTooltip: 'Reiniciar',
     },
     pt: {
       modeSearch: 'Busca Reativa',
@@ -66,6 +68,8 @@ export const LaunchedEffectDemo: React.FC<LaunchedEffectDemoProps> = ({ onLog })
       cancelledStatus: 'Cancelada (Job descartado)',
       completedStatus: 'Concluída com sucesso',
       idleStatus: 'Inativa',
+      resetLog: 'Temporizador reiniciado',
+      resetTooltip: 'Reiniciar',
     },
     en: {
       modeSearch: 'Reactive Search',
@@ -84,6 +88,8 @@ export const LaunchedEffectDemo: React.FC<LaunchedEffectDemoProps> = ({ onLog })
       cancelledStatus: 'Cancelled (Job aborted)',
       completedStatus: 'Completed successfully',
       idleStatus: 'Idle',
+      resetLog: 'Timer reset',
+      resetTooltip: 'Reset',
     },
   }[language];
 
@@ -339,10 +345,10 @@ export const LaunchedEffectDemo: React.FC<LaunchedEffectDemoProps> = ({ onLog })
               <button
                 onClick={() => {
                   setTimeLeft(timerDuration);
-                  onLog('LaunchedEffect', 'DEBUG', 'Timer reset');
+                  onLog('LaunchedEffect', 'DEBUG', tSearch.resetLog);
                 }}
                 className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700"
-                title="Reset"
+                title={tSearch.resetTooltip}
               >
                 <RotateCcw className="w-4 h-4" />
               </button>

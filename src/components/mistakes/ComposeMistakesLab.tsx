@@ -41,6 +41,7 @@ const UI = {
       'Esta sección recopila los 20 errores más comunes al trabajar con Jetpack Compose. Úsala como checklist antes de dar por terminada una pantalla: composición, estado, listas, rendimiento, arquitectura, ciclo de vida y accesibilidad.',
     footerNote:
       'Cada ejemplo se centra únicamente en el error mostrado; un proyecto real puede requerir otros ajustes.',
+    buildLabel: 'Versión',
   },
   pt: {
     kicker: 'Jetpack Compose · Boas Práticas',
@@ -66,6 +67,7 @@ const UI = {
       'Esta seção reúne os 20 erros mais comuns ao trabalhar com Jetpack Compose. Use-a como checklist antes de considerar uma tela pronta: composição, estado, listas, desempenho, arquitetura, ciclo de vida e acessibilidade.',
     footerNote:
       'Cada exemplo foca apenas no erro mostrado; um projeto real pode precisar de outros ajustes.',
+    buildLabel: 'Versão',
   },
   en: {
     kicker: 'Jetpack Compose · Best Practices',
@@ -91,6 +93,7 @@ const UI = {
       'This section collects the 20 most common Compose mistakes. Use it as a checklist before shipping a screen: composition, state, lists, performance, architecture, lifecycle, and accessibility.',
     footerNote:
       'Each snippet focuses only on the mistake shown; production code may need additional changes.',
+    buildLabel: 'Version',
   },
 } as const;
 
@@ -347,7 +350,7 @@ export const ComposeMistakesLab: React.FC = () => {
         <p className="text-sm text-slate-300 leading-relaxed max-w-4xl">{t.sourceBody}</p>
         <p className="text-xs text-slate-500 leading-relaxed">{t.footerNote}</p>
         <div className="flex items-center gap-2 pt-1">
-          <span className="ds-label text-on-surface-variant">Build</span>
+          <span className="ds-label text-on-surface-variant">{t.buildLabel}</span>
           <span className="px-3 py-1 rounded-full bg-surface-container text-brand font-mono text-xs font-semibold">
             {APP_VERSION_LABEL}
           </span>

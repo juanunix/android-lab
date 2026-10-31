@@ -8,11 +8,107 @@ export const MviTemplateGenerator: React.FC = () => {
   const [featureName, setFeatureName] = useState('Task');
   const [preset, setPreset] = useState<'task' | 'auth' | 'profile' | 'search'>('task');
 
+  const gen = {
+    es: {
+      kicker: 'Generador Canónico de Código MVI',
+      title: 'Crea tu pantalla MVI en 1 Clic',
+      description:
+        'Genera la arquitectura completa según los skills oficiales: <Screen>State, <Screen>Action, <Screen>Event, <Screen>ViewModel y el archivo <Screen>Screen.kt con el orden exacto: 1. <Screen>Root, 2. <Screen>Screen y 3. <Screen>ScreenPreview.',
+      featureLabel: 'Nombre del Feature / Pantalla:',
+      placeholder: 'Ej: Order, Crypto, Setting',
+      templateTitle: 'Plantilla Canónica MVI',
+      presets: {
+        task: 'Task Manager (Tareas)',
+        auth: 'Login / Autenticación',
+        profile: 'Perfil de Usuario',
+        search: 'Búsqueda & Catálogo',
+      },
+      itemSelected: 'Item seleccionado',
+      loadComment: '// Simulación de carga desde repositorio',
+      itemDetail: 'Detalle de',
+      itemExtra: 'Información complementaria',
+      composablesHeader: 'Root + Screen + Preview en el mismo archivo',
+      rootDoc: 'Obtiene el ViewModel, recolecta el estado con ciclo de vida, observa eventos únicos (ObserveAsEvents) y delega a <Screen>Screen.',
+      observeComment: '// Observa eventos únicos de canal (si existen)',
+      screenDoc1: '100% Stateless: recibe state, onAction y callbacks directos de navegación.',
+      screenDoc2: 'No tiene referencias al ViewModel, haciéndola totalmente testeable.',
+      back: 'Regresar',
+      searchIn: 'Buscar en',
+      directNav: '// Navegación directa en clic',
+      previewDoc: 'Previsualización inmediata en Android Studio con datos muestra estáticos.',
+      example: 'Ejemplo',
+      elementDesc: 'Descripción del elemento',
+      detailedInfo: 'Información detallada',
+    },
+    pt: {
+      kicker: 'Gerador Canônico de Código MVI',
+      title: 'Crie sua tela MVI em 1 Clique',
+      description:
+        'Gera a arquitetura completa segundo os skills oficiais: <Screen>State, <Screen>Action, <Screen>Event, <Screen>ViewModel e o arquivo <Screen>Screen.kt com a ordem exata: 1. <Screen>Root, 2. <Screen>Screen e 3. <Screen>ScreenPreview.',
+      featureLabel: 'Nome do Feature / Tela:',
+      placeholder: 'Ex: Order, Crypto, Setting',
+      templateTitle: 'Modelo Canônico MVI',
+      presets: {
+        task: 'Task Manager (Tarefas)',
+        auth: 'Login / Autenticação',
+        profile: 'Perfil de Usuário',
+        search: 'Busca & Catálogo',
+      },
+      itemSelected: 'Item selecionado',
+      loadComment: '// Simulação de carga do repositório',
+      itemDetail: 'Detalhe de',
+      itemExtra: 'Informação complementar',
+      composablesHeader: 'Root + Screen + Preview no mesmo arquivo',
+      rootDoc: 'Obtém o ViewModel, coleta o estado com ciclo de vida, observa eventos únicos (ObserveAsEvents) e delega para <Screen>Screen.',
+      observeComment: '// Observa eventos únicos do canal (se existirem)',
+      screenDoc1: '100% Stateless: recebe state, onAction e callbacks diretos de navegação.',
+      screenDoc2: 'Não possui referências ao ViewModel, tornando-a totalmente testável.',
+      back: 'Voltar',
+      searchIn: 'Buscar em',
+      directNav: '// Navegação direta no clique',
+      previewDoc: 'Pré-visualização imediata no Android Studio com dados de amostra estáticos.',
+      example: 'Exemplo',
+      elementDesc: 'Descrição do elemento',
+      detailedInfo: 'Informação detalhada',
+    },
+    en: {
+      kicker: 'Canonical MVI Code Generator',
+      title: 'Create your MVI screen in 1 Click',
+      description:
+        'Generates the complete architecture following official skills: <Screen>State, <Screen>Action, <Screen>Event, <Screen>ViewModel and the <Screen>Screen.kt file in exact order: 1. <Screen>Root, 2. <Screen>Screen and 3. <Screen>ScreenPreview.',
+      featureLabel: 'Feature / Screen name:',
+      placeholder: 'e.g. Order, Crypto, Setting',
+      templateTitle: 'Canonical MVI Template',
+      presets: {
+        task: 'Task Manager',
+        auth: 'Login / Authentication',
+        profile: 'User Profile',
+        search: 'Search & Catalog',
+      },
+      itemSelected: 'Item selected',
+      loadComment: '// Simulated repository load',
+      itemDetail: 'Detail of',
+      itemExtra: 'Additional information',
+      composablesHeader: 'Root + Screen + Preview in the same file',
+      rootDoc: 'Obtains the ViewModel, collects state with lifecycle awareness, observes one-shot events (ObserveAsEvents), and delegates to <Screen>Screen.',
+      observeComment: '// Observe one-shot channel events (if any)',
+      screenDoc1: '100% Stateless: receives state, onAction, and direct navigation callbacks.',
+      screenDoc2: 'No ViewModel references, making it fully testable.',
+      back: 'Back',
+      searchIn: 'Search in',
+      directNav: '// Direct navigation on click',
+      previewDoc: 'Instant preview in Android Studio with static sample data.',
+      example: 'Example',
+      elementDesc: 'Element description',
+      detailedInfo: 'Detailed information',
+    },
+  }[language];
+
   const presets = [
-    { id: 'task' as const, name: 'Task Manager (Tareas)', feature: 'Task' },
-    { id: 'auth' as const, name: 'Login / Autenticación', feature: 'Auth' },
-    { id: 'profile' as const, name: 'Perfil de Usuario', feature: 'Profile' },
-    { id: 'search' as const, name: 'Búsqueda & Catálogo', feature: 'Search' },
+    { id: 'task' as const, name: gen.presets.task, feature: 'Task' },
+    { id: 'auth' as const, name: gen.presets.auth, feature: 'Auth' },
+    { id: 'profile' as const, name: gen.presets.profile, feature: 'Profile' },
+    { id: 'search' as const, name: gen.presets.search, feature: 'Search' },
   ];
 
   const handleSelectPreset = (p: 'task' | 'auth' | 'profile' | 'search', feat: string) => {
@@ -111,7 +207,7 @@ class ${f}ViewModel(
             }
             is ${f}Action.OnItemClick -> {
                 viewModelScope.launch {
-                    _events.send(${f}Event.ShowSnackbar(UiText.DynamicString("Item seleccionado: \${action.id}")))
+                    _events.send(${f}Event.ShowSnackbar(UiText.DynamicString("${gen.itemSelected}: \${action.id}")))
                 }
             }
             ${f}Action.OnRefreshClick -> loadData()
@@ -122,13 +218,13 @@ class ${f}ViewModel(
     private fun loadData() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            // Simulación de carga desde repositorio
+            ${gen.loadComment}
             _state.update {
                 it.copy(
                     isLoading = false,
                     items = listOf(
-                        ${f}Ui("1", "${f} Item #1", "Detalle de ${f}"),
-                        ${f}Ui("2", "${f} Item #2", "Información complementaria")
+                        ${f}Ui("1", "${f} Item #1", "${gen.itemDetail} ${f}"),
+                        ${f}Ui("2", "${f} Item #2", "${gen.itemExtra}")
                     )
                 )
             }
@@ -143,13 +239,12 @@ class ${f}ViewModel(
 }
 
 // =========================================================================
-// 6. COMPOSABLES: ${f}Screen.kt (Root + Screen + Preview en el mismo archivo)
+// 6. COMPOSABLES: ${f}Screen.kt (${gen.composablesHeader})
 // =========================================================================
 
 /**
  * 1. Root Composable (<Screen>Root)
- * Obtiene el ViewModel, recolecta el estado con ciclo de vida,
- * observa eventos únicos (ObserveAsEvents) y delega a <Screen>Screen.
+ * ${gen.rootDoc}
  */
 @Composable
 fun ${f}Root(
@@ -161,7 +256,7 @@ fun ${f}Root(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    // Observa eventos únicos de canal (si existen)
+    ${gen.observeComment}
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
             ${f}Event.ActionSucceeded -> onNavigateBack()
@@ -181,8 +276,8 @@ fun ${f}Root(
 
 /**
  * 2. Screen Composable (<Screen>Screen)
- * 100% Stateless: recibe state, onAction y callbacks directos de navegación.
- * No tiene referencias al ViewModel, haciéndola totalmente testeable.
+ * ${gen.screenDoc1}
+ * ${gen.screenDoc2}
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -200,7 +295,7 @@ fun ${f}Screen(
                 title = { Text("${f}") },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Regresar")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "${gen.back}")
                     }
                 }
             )
@@ -215,7 +310,7 @@ fun ${f}Screen(
             OutlinedTextField(
                 value = state.searchQuery,
                 onValueChange = { onAction(${f}Action.OnSearchQueryChange(it)) },
-                label = { Text("Buscar en ${f}") },
+                label = { Text("${gen.searchIn} ${f}") },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -229,7 +324,7 @@ fun ${f}Screen(
                         ElevatedCard(
                             onClick = { 
                                 onAction(${f}Action.OnItemClick(item.id))
-                                onItemClick(item.id) // Navegación directa en clic
+                                onItemClick(item.id) ${gen.directNav}
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -248,7 +343,7 @@ fun ${f}Screen(
 
 /**
  * 3. Screen Preview (<Screen>ScreenPreview)
- * Previsualización inmediata en Android Studio con datos muestra estáticos.
+ * ${gen.previewDoc}
  */
 @Preview(showBackground = true)
 @Composable
@@ -257,8 +352,8 @@ private fun ${f}ScreenPreview() {
         ${f}Screen(
             state = ${f}State(
                 items = listOf(
-                    ${f}Ui("1", "Ejemplo ${f} Alpha", "Descripción del elemento"),
-                    ${f}Ui("2", "Ejemplo ${f} Beta", "Información detallada")
+                    ${f}Ui("1", "${gen.example} ${f} Alpha", "${gen.elementDesc}"),
+                    ${f}Ui("2", "${gen.example} ${f} Beta", "${gen.detailedInfo}")
                 )
             ),
             onAction = {},
@@ -274,13 +369,13 @@ private fun ${f}ScreenPreview() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Generador Canónico de Código MVI
+            {gen.kicker}
           </span>
           <h3 className="text-xl font-bold text-white mt-0.5">
-            Crea tu pantalla MVI en 1 Clic
+            {gen.title}
           </h3>
           <p className="text-xs text-slate-400 mt-1">
-            Genera la arquitectura completa según los skills oficiales: <code>&lt;Screen&gt;State</code>, <code>&lt;Screen&gt;Action</code>, <code>&lt;Screen&gt;Event</code>, <code>&lt;Screen&gt;ViewModel</code>, y el archivo <code>&lt;Screen&gt;Screen.kt</code> con el orden exacto: <strong>1. &lt;Screen&gt;Root</strong>, <strong>2. &lt;Screen&gt;Screen</strong> y <strong>3. &lt;Screen&gt;ScreenPreview</strong>.
+            {gen.description}
           </p>
         </div>
 
@@ -305,14 +400,14 @@ private fun ${f}ScreenPreview() {
       {/* Custom feature name input */}
       <div className="flex flex-col sm:flex-row items-center gap-3 bg-[#0b1120] p-3.5 rounded-xl border border-slate-800 text-xs">
         <span className="text-slate-300 font-semibold shrink-0">
-          Nombre del Feature / Pantalla:
+          {gen.featureLabel}
         </span>
         <div className="flex items-center gap-2 flex-1 w-full">
           <input
             type="text"
             value={featureName}
             onChange={(e) => setFeatureName(e.target.value.replace(/\s+/g, ''))}
-            placeholder="Ej: Order, Crypto, Setting"
+            placeholder={gen.placeholder}
             className="flex-1 px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-white font-mono focus:outline-none focus:border-emerald-500"
           />
           <span className="text-emerald-400 font-mono text-xs">
@@ -324,7 +419,7 @@ private fun ${f}ScreenPreview() {
       {/* Generated Code Output */}
       <div className="space-y-2">
         <CodeViewer
-          title={`${featureName}Screen.kt (Plantilla Canónica MVI)`}
+          title={`${featureName}Screen.kt (${gen.templateTitle})`}
           code={generateKotlinCode()}
         />
       </div>

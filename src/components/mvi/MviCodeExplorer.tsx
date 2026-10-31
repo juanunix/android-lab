@@ -7,12 +7,120 @@ export const MviCodeExplorer: React.FC = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<string>('screen');
 
+  const text = {
+    es: {
+      kicker: 'Plantilla Canónica de Código MVI',
+      heading: 'Estructura Canónica de Archivos MVI (Skills)',
+      screen: {
+        title: '1. Archivo Composable (<Screen>Screen.kt)',
+        description: 'Orden canónico: 1. Composable Root, 2. Composable Screen, 3. Preview en el mismo archivo.',
+      },
+      state: {
+        title: '2. Estado UI Inmutable y Modelo UI',
+        description: 'Única fuente de verdad (<Screen>State) y modelos de presentación (<Model>Ui).',
+      },
+      action: {
+        title: '3. Interfaz de Acciones Sellada (<Screen>Action)',
+        description: 'Modela todas las interacciones del usuario en una interfaz sellada exhaustiva con prefijo On...',
+      },
+      event: {
+        title: '4. Interfaz de Eventos de un Solo Uso (<Screen>Event)',
+        description: 'Eventos transitorios de UI enviados por un Channel (¡nunca guardados en State!).',
+      },
+      viewmodel: {
+        title: '5. ViewModel Canónico (<Screen>ViewModel)',
+        description: 'Maneja onAction de forma exhaustiva con actualizaciones atómicas de estado (_state.update).',
+      },
+      observe_helper: {
+        title: '6. Helper ObserveAsEvents',
+        description: 'Colector de eventos canónico y seguro ante el ciclo de vida con repeatOnLifecycle.',
+      },
+      uitext: {
+        title: '7. Patrón UiText',
+        description: 'Desacopla los recursos String de Android del ViewModel.',
+      },
+      cartContentDescription: 'Carrito',
+      storeSearchPlaceholder: 'Buscar en la tienda...',
+      addLabel: 'Agregar',
+    },
+    pt: {
+      kicker: 'Modelo Canônico de Código MVI',
+      heading: 'Estrutura Canônica de Arquivos MVI (Skills)',
+      screen: {
+        title: '1. Arquivo Composable (<Screen>Screen.kt)',
+        description: 'Ordem canônica: 1. Composable Root, 2. Composable Screen, 3. Preview no mesmo arquivo.',
+      },
+      state: {
+        title: '2. Estado UI Imutável e Modelo UI',
+        description: 'Fonte única de verdade (<Screen>State) e modelos de apresentação (<Model>Ui).',
+      },
+      action: {
+        title: '3. Interface de Ações Selada (<Screen>Action)',
+        description: 'Modela todas as interações do usuário em uma interface selada exaustiva com prefixo On...',
+      },
+      event: {
+        title: '4. Interface de Eventos de Uso Único (<Screen>Event)',
+        description: 'Eventos transitórios de UI enviados por um Channel (nunca armazenados no State!).',
+      },
+      viewmodel: {
+        title: '5. ViewModel Canônico (<Screen>ViewModel)',
+        description: 'Trata onAction de forma exaustiva com atualizações atômicas de estado (_state.update).',
+      },
+      observe_helper: {
+        title: '6. Helper ObserveAsEvents',
+        description: 'Coletor de eventos canônico e seguro para o ciclo de vida com repeatOnLifecycle.',
+      },
+      uitext: {
+        title: '7. Padrão UiText',
+        description: 'Desacopla os recursos String do Android do ViewModel.',
+      },
+      cartContentDescription: 'Carrinho',
+      storeSearchPlaceholder: 'Buscar na loja...',
+      addLabel: 'Adicionar',
+    },
+    en: {
+      kicker: 'Canonical MVI Code Template',
+      heading: 'Canonical MVI File Structure (Skills)',
+      screen: {
+        title: '1. Composable File (<Screen>Screen.kt)',
+        description: 'Canonical order from skills: 1. Root composable, 2. Screen composable, 3. Preview in the same file.',
+      },
+      state: {
+        title: '2. Immutable UI State & UI Model',
+        description: 'Single Source of Truth (<Screen>State) and UI presentation models (<Model>Ui).',
+      },
+      action: {
+        title: '3. Sealed Action Interface (<Screen>Action)',
+        description: 'Models all user interactions into an exhaustive sealed interface with On... prefix.',
+      },
+      event: {
+        title: '4. One-Shot Event Interface (<Screen>Event)',
+        description: 'Transient UI events sent through a Channel (never stored in State!).',
+      },
+      viewmodel: {
+        title: '5. Canonical ViewModel (<Screen>ViewModel)',
+        description: 'Handles onAction exhaustively with atomic state updates (_state.update).',
+      },
+      observe_helper: {
+        title: '6. ObserveAsEvents Helper',
+        description: 'Canonical lifecycle-safe event collector with repeatOnLifecycle.',
+      },
+      uitext: {
+        title: '7. UiText Pattern',
+        description: 'Decouples Android String resources from ViewModel.',
+      },
+      cartContentDescription: 'Cart',
+      storeSearchPlaceholder: 'Search the store...',
+      addLabel: 'Add',
+    },
+  }[language];
+
   const files = [
     {
       id: 'screen',
       fileName: 'ProductListScreen.kt',
-      title: '1. Composable File (<Screen>Screen.kt)',
-      description: 'Canonical order from skills: 1. Root composable, 2. Screen composable, 3. Preview in the same file.',
+      title: text.screen.title,
+      description: text.screen.description,
       code: `package com.example.shop.presentation.product_list
 
 import androidx.compose.foundation.layout.*
@@ -100,7 +208,7 @@ fun ProductListScreen(
                                 }
                             }
                         ) {
-                            Icon(Icons.Default.ShoppingCart, contentDescription = "Carrito")
+                            Icon(Icons.Default.ShoppingCart, contentDescription = "${text.cartContentDescription}")
                         }
                     }
                 }
@@ -118,7 +226,7 @@ fun ProductListScreen(
                 OutlinedTextField(
                     value = state.searchQuery,
                     onValueChange = { onAction(ProductListAction.OnSearchQueryChange(it)) },
-                    placeholder = { Text("Buscar en la tienda...") },
+                    placeholder = { Text("${text.storeSearchPlaceholder}") },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -141,7 +249,7 @@ fun ProductListScreen(
                         Button(
                             onClick = { onAction(ProductListAction.OnAddToCart(product.id)) }
                         ) {
-                            Text("Agregar")
+                            Text("${text.addLabel}")
                         }
                     }
                 }
@@ -178,8 +286,8 @@ private fun ProductListScreenPreview() {
     {
       id: 'state',
       fileName: 'ProductListState.kt',
-      title: '2. Immutable UI State & UI Model',
-      description: 'Single Source of Truth (<Screen>State) and UI presentation models (<Model>Ui).',
+      title: text.state.title,
+      description: text.state.description,
       code: `package com.example.shop.presentation.product_list
 
 import com.example.shop.presentation.util.UiText
@@ -215,8 +323,8 @@ data class ProductListState(
     {
       id: 'action',
       fileName: 'ProductListAction.kt',
-      title: '3. Sealed Action Interface (<Screen>Action)',
-      description: 'Models all user interactions into an exhaustive sealed interface with On... prefix.',
+      title: text.action.title,
+      description: text.action.description,
       code: `package com.example.shop.presentation.product_list
 
 /**
@@ -236,8 +344,8 @@ sealed interface ProductListAction {
     {
       id: 'event',
       fileName: 'ProductListEvent.kt',
-      title: '4. One-Shot Event Interface (<Screen>Event)',
-      description: 'Transient UI events sent through a Channel (never stored in State!).',
+      title: text.event.title,
+      description: text.event.description,
       code: `package com.example.shop.presentation.product_list
 
 import com.example.shop.presentation.util.UiText
@@ -255,8 +363,8 @@ sealed interface ProductListEvent {
     {
       id: 'viewmodel',
       fileName: 'ProductListViewModel.kt',
-      title: '5. Canonical ViewModel (<Screen>ViewModel)',
-      description: 'Handles onAction exhaustively with atomic state updates (_state.update).',
+      title: text.viewmodel.title,
+      description: text.viewmodel.description,
       code: `package com.example.shop.presentation.product_list
 
 import androidx.lifecycle.ViewModel
@@ -352,8 +460,8 @@ class ProductListViewModel(
     {
       id: 'observe_helper',
       fileName: 'ObserveAsEvents.kt',
-      title: '6. ObserveAsEvents Helper',
-      description: 'Canonical lifecycle-safe event collector with repeatOnLifecycle.',
+      title: text.observe_helper.title,
+      description: text.observe_helper.description,
       code: `package com.example.shop.presentation.util
 
 import androidx.compose.runtime.Composable
@@ -390,8 +498,8 @@ fun <T> ObserveAsEvents(
     {
       id: 'uitext',
       fileName: 'UiText.kt',
-      title: '7. UiText Pattern',
-      description: 'Decouples Android String resources from ViewModel.',
+      title: text.uitext.title,
+      description: text.uitext.description,
       code: `package com.example.shop.presentation.util
 
 import android.content.Context
@@ -436,10 +544,10 @@ sealed interface UiText {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-800 pb-3">
         <div>
           <span className="text-xs font-mono text-emerald-400 uppercase font-semibold">
-            Plantilla Canónica de Código MVI
+            {text.kicker}
           </span>
           <h3 className="text-xl font-bold text-white mt-0.5">
-            Estructura Canónica de Archivos MVI (Skills)
+            {text.heading}
           </h3>
         </div>
 

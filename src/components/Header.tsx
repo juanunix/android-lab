@@ -34,6 +34,39 @@ export const Header: React.FC<HeaderProps> = ({
     en: { navList: 'The 20 Mistakes', navFilters: 'Filters', navSource: 'Source', cta: 'Start' },
   }[language];
 
+  const headerLabels = {
+    es: {
+      mviTab: 'Arquitectura MVI',
+      udf: 'Ciclo UDF',
+      simulator: 'Simulador MVI',
+      channel: 'Channel vs State',
+      code: 'Plantillas de Código',
+      rules: '5 Reglas',
+      generate: 'Generar MVI',
+      languagePrefix: 'Cambiar idioma a',
+    },
+    pt: {
+      mviTab: 'Arquitetura MVI',
+      udf: 'Ciclo UDF',
+      simulator: 'Simulador MVI',
+      channel: 'Channel vs State',
+      code: 'Modelos de Código',
+      rules: '5 Regras',
+      generate: 'Gerar MVI',
+      languagePrefix: 'Trocar idioma para',
+    },
+    en: {
+      mviTab: 'MVI Architecture',
+      udf: 'UDF Cycle',
+      simulator: 'MVI Simulator',
+      channel: 'Channel vs State',
+      code: 'Code Templates',
+      rules: '5 Rules',
+      generate: 'Generate MVI',
+      languagePrefix: 'Switch language to',
+    },
+  }[language];
+
   return (
     <header className="flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-surface/80 backdrop-blur-2xl sticky top-0 z-40">
       {/* Zone 1: Single text element wordmark */}
@@ -74,7 +107,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Cpu className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Arquitectura MVI</span>
+            <span className="hidden sm:inline">{headerLabels.mviTab}</span>
             <span className="sm:hidden">MVI</span>
           </button>
           <button
@@ -126,31 +159,31 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => onNavigateSection('udf')}
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
-              Ciclo UDF
+              {headerLabels.udf}
             </button>
             <button
               onClick={() => onNavigateSection('simulator')}
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
-              Simulador MVI
+              {headerLabels.simulator}
             </button>
             <button
               onClick={() => onNavigateSection('channel-vs-state')}
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
-              Channel vs State
+              {headerLabels.channel}
             </button>
             <button
               onClick={() => onNavigateSection('code-explorer')}
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
-              Plantillas de Código
+              {headerLabels.code}
             </button>
             <button
               onClick={() => onNavigateSection('rules')}
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
-              5 Reglas
+              {headerLabels.rules}
             </button>
           </>
         ) : (
@@ -191,7 +224,7 @@ export const Header: React.FC<HeaderProps> = ({
                   ? 'bg-brand/15 text-brand shadow-xs'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
-              title={`Trocar idioma para ${item.label}`}
+              title={`${headerLabels.languagePrefix} ${item.label}`}
             >
               <span className="mr-1 text-[11px]">{item.flag}</span>
               <span>{item.label}</span>
@@ -214,7 +247,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
           >
             <Code2 className="w-3.5 h-3.5 stroke-[2.5]" />
-            <span>Generar MVI</span>
+            <span>{headerLabels.generate}</span>
           </button>
         ) : (
           <button

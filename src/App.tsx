@@ -356,7 +356,9 @@ function AppContent() {
 
               {/* Kotlin Signature */}
               <div className="space-y-1">
-                <span className="text-xs font-mono text-slate-400">Firma Kotlin:</span>
+                <span className="text-xs font-mono text-slate-400">
+                  {language === 'en' ? 'Kotlin signature:' : language === 'pt' ? 'Assinatura Kotlin:' : 'Firma Kotlin:'}
+                </span>
                 <div className="p-3 rounded-xl bg-surface-lowest text-xs font-mono text-sky-300 overflow-x-auto leading-relaxed">
                   {currentEffect.kotlinSignature}
                 </div>

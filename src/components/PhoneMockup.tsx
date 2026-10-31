@@ -29,6 +29,7 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
       landscape: 'Horizontal',
       hint: 'Doble clic en la pantalla para rotar el dispositivo',
       recreated: 'Actividad recreada',
+      recomps: 'Recomps:',
     },
     pt: {
       rotate: 'Girar dispositivo',
@@ -36,6 +37,7 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
       landscape: 'Horizontal',
       hint: 'Clique duas vezes na tela para girar o dispositivo',
       recreated: 'Activity recriada',
+      recomps: 'Recomps:',
     },
     en: {
       rotate: 'Rotate device',
@@ -43,6 +45,7 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
       landscape: 'Landscape',
       hint: 'Double-click the screen to rotate the device',
       recreated: 'Activity recreated',
+      recomps: 'Recomps:',
     },
   }[language];
 
@@ -108,7 +111,7 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
                 </span>
                 {typeof recompositionCount === 'number' && (
                   <div className="flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/40 border border-amber-800/60 px-1.5 py-0.5 rounded">
-                    <span className="text-slate-400">Recomps:</span>
+                    <span className="text-slate-400">{t.recomps}</span>
                     <span className="font-bold tabular-nums">{recompositionCount}</span>
                   </div>
                 )}

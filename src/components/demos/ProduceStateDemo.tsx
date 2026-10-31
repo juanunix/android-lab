@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, AlertTriangle, CheckCircle, Package } from 'lucide-react';
 import { LogItem } from '../../types/sideEffects';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface ProduceStateDemoProps {
   onLog: (tag: string, level: LogItem['level'], message: string) => void;
@@ -19,6 +20,58 @@ type UiState<T> =
   | { status: 'ERROR'; message: string };
 
 export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => {
+  const { language } = useLanguage();
+  const t = {
+    es: {
+      keyLabel: 'Clave reactiva (productId):',
+      simulateFailure: 'Simular fallo de red:',
+      failureOn: 'Fallo Activado',
+      connectionNormal: 'Conexión Normal',
+      querying: 'Consultando backend asíncrono...',
+      available: 'Disponibles:',
+      retry: 'Reintentar llamada',
+      errorMessage: 'Error 503: Servidor de inventario no disponible',
+      tablet: 'Pixel Tablet con Base',
+      genericDevice: 'Dispositivo Android Genérico',
+      producerStarted: (id: string) => `produceState(initialValue = Loading, key = "${id}"): Corrutina del productor iniciada`,
+      errorEmitted: 'value = UiState.Error("Error 503...") emitido al State',
+      successAssigned: (name: string) => `value = UiState.Success("${name}") asignado a value en ProduceStateScope`,
+      producerCancelled: 'Productor anterior cancelado por cambio de key o recomposición',
+    },
+    pt: {
+      keyLabel: 'Chave reativa (productId):',
+      simulateFailure: 'Simular falha de rede:',
+      failureOn: 'Falha Ativada',
+      connectionNormal: 'Conexão Normal',
+      querying: 'Consultando backend assíncrono...',
+      available: 'Disponíveis:',
+      retry: 'Tentar novamente',
+      errorMessage: 'Erro 503: Servidor de inventário indisponível',
+      tablet: 'Pixel Tablet com Base',
+      genericDevice: 'Dispositivo Android Genérico',
+      producerStarted: (id: string) => `produceState(initialValue = Loading, key = "${id}"): Corrotina do produtor iniciada`,
+      errorEmitted: 'value = UiState.Error("Erro 503...") emitido para o State',
+      successAssigned: (name: string) => `value = UiState.Success("${name}") atribuído a value em ProduceStateScope`,
+      producerCancelled: 'Produtor anterior cancelado por mudança de key ou recomposição',
+    },
+    en: {
+      keyLabel: 'Reactive key (productId):',
+      simulateFailure: 'Simulate network failure:',
+      failureOn: 'Failure Enabled',
+      connectionNormal: 'Normal Connection',
+      querying: 'Querying async backend...',
+      available: 'Available:',
+      retry: 'Retry call',
+      errorMessage: 'Error 503: Inventory server unavailable',
+      tablet: 'Pixel Tablet with Dock',
+      genericDevice: 'Generic Android Device',
+      producerStarted: (id: string) => `produceState(initialValue = Loading, key = "${id}"): Producer coroutine started`,
+      errorEmitted: 'value = UiState.Error("Error 503...") emitted to State',
+      successAssigned: (name: string) => `value = UiState.Success("${name}") assigned to value in ProduceStateScope`,
+      producerCancelled: 'Previous producer cancelled due to key change or recomposition',
+    },
+  }[language];
+
   const [productId, setProductId] = useState('PROD-101');
   const [uiState, setUiState] = useState<UiState<Product>>({ status: 'LOADING' });
   const [shouldFail, setShouldFail] = useState(false);
@@ -28,57 +81,45 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
   useEffect(() => {
     // 1. Initial State
     setUiState({ status: 'LOADING' });
-    onLog(
-      'produceState',
-      'DEBUG',
-      `produceState(initialValue = Loading, key = "${productId}"): Corrutina del productor iniciada`
-    );
+    onLog('produceState', 'DEBUG', t.producerStarted(productId));
 
     const timer = setTimeout(() => {
       if (shouldFail) {
         setUiState({
           status: 'ERROR',
-          message: 'Error 503: Servidor de inventario no disponible',
+          message: t.errorMessage,
         });
-        onLog(
-          'produceState',
-          'ERROR',
-          `value = UiState.Error("Error 503...") emitido al State`
-        );
+        onLog('produceState', 'ERROR', t.errorEmitted);
       } else {
         const mockCatalog: Record<string, Product> = {
           'PROD-101': { id: 'PROD-101', name: 'Google Pixel 9 Pro', price: '$999', stock: 14 },
-          'PROD-102': { id: 'PROD-102', name: 'Pixel Tablet con Base', price: '$499', stock: 8 },
+          'PROD-102': { id: 'PROD-102', name: t.tablet, price: '$499', stock: 8 },
           'PROD-103': { id: 'PROD-103', name: 'Pixel Watch 3 (45mm)', price: '$349', stock: 22 },
         };
         const product = mockCatalog[productId] || {
           id: productId,
-          name: 'Dispositivo Android Generico',
+          name: t.genericDevice,
           price: '$199',
           stock: 5,
         };
 
         setUiState({ status: 'SUCCESS', data: product });
-        onLog(
-          'produceState',
-          'INFO',
-          `value = UiState.Success("${product.name}") asignado a value en ProduceStateScope`
-        );
+        onLog('produceState', 'INFO', t.successAssigned(product.name));
       }
     }, 700);
 
     return () => {
       clearTimeout(timer);
-      onLog('produceState', 'WARN', `Productor anterior cancelado por cambio de key o recomposición`);
+      onLog('produceState', 'WARN', t.producerCancelled);
     };
-  }, [productId, shouldFail, retryTrigger]);
+  }, [productId, shouldFail, retryTrigger, language]);
 
   return (
     <div className="flex flex-col h-full space-y-3">
       {/* Product Key Selector */}
       <div className="space-y-1.5">
         <span className="text-[11px] font-mono text-slate-400">
-          Clave reactiva (productId):
+          {t.keyLabel}
         </span>
         <div className="grid grid-cols-3 gap-1.5">
           {['PROD-101', 'PROD-102', 'PROD-103'].map((id) => (
@@ -102,7 +143,7 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
 
       {/* Network Failure Toggle */}
       <div className="flex items-center justify-between p-2 bg-slate-900/80 rounded-lg border border-slate-800 text-xs">
-        <span className="text-slate-300">Simular fallo de red:</span>
+        <span className="text-slate-300">{t.simulateFailure}</span>
         <button
           onClick={() => {
             const next = !shouldFail;
@@ -115,7 +156,7 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
               : 'bg-slate-800 text-slate-400 hover:text-slate-200'
           }`}
         >
-          {shouldFail ? 'Fallo Activado' : 'Conexión Normal'}
+          {shouldFail ? t.failureOn : t.connectionNormal}
         </button>
       </div>
 
@@ -129,7 +170,7 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
                 initialValue = UiState.Loading
               </span>
               <span className="text-[11px] text-slate-500 font-mono">
-                Consultando backend asíncrono...
+                {t.querying}
               </span>
             </div>
           </div>
@@ -153,7 +194,7 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
             </div>
             <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-mono">
               <span>SKU: {uiState.data.id}</span>
-              <span className="text-emerald-400">Disponibles: {uiState.data.stock}</span>
+              <span className="text-emerald-400">{t.available} {uiState.data.stock}</span>
             </div>
           </div>
         )}
@@ -177,7 +218,7 @@ export const ProduceStateDemo: React.FC<ProduceStateDemoProps> = ({ onLog }) => 
               className="py-1.5 px-3 bg-rose-900/60 hover:bg-rose-800/60 text-white rounded-lg text-xs font-medium border border-rose-700/60 flex items-center gap-1.5 mx-auto"
             >
               <RefreshCw className="w-3 h-3" />
-              <span>Reintentar llamada</span>
+              <span>{t.retry}</span>
             </button>
           </div>
         )}

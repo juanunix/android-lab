@@ -62,6 +62,12 @@ export const MviScreenSimulator: React.FC = () => {
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (One-Shot Flow)',
       noEvents: 'Canal vacío (esperando eventos únicos)',
+      addedToCart: '¡Artículo agregado al carrito!',
+      catalogUpdated: 'Catálogo actualizado con éxito',
+      loadingProducts: 'Cargando productos...',
+      noProducts: 'No se encontraron productos',
+      favorite: 'Favorito',
+      refreshTooltip: 'Refrescar',
     },
     pt: {
       screenTitle: 'Pixel Store MVI Screen',
@@ -81,6 +87,12 @@ export const MviScreenSimulator: React.FC = () => {
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (Fluxo Único)',
       noEvents: 'Canal vazio (aguardando eventos únicos)',
+      addedToCart: 'Item adicionado ao carrinho!',
+      catalogUpdated: 'Catálogo atualizado com sucesso',
+      loadingProducts: 'Carregando produtos...',
+      noProducts: 'Nenhum produto encontrado',
+      favorite: 'Favorito',
+      refreshTooltip: 'Atualizar',
     },
     en: {
       screenTitle: 'Pixel Store MVI Screen',
@@ -100,6 +112,12 @@ export const MviScreenSimulator: React.FC = () => {
       actionsTitle: 'Action Dispatcher (UI -> ViewModel)',
       eventsTitle: 'Channel<Event> (One-Shot Flow)',
       noEvents: 'Channel empty (waiting for one-time events)',
+      addedToCart: 'Item added to cart!',
+      catalogUpdated: 'Catalog updated successfully',
+      loadingProducts: 'Loading products...',
+      noProducts: 'No products found',
+      favorite: 'Favorite',
+      refreshTooltip: 'Refresh',
     },
   }[language];
 
@@ -166,7 +184,7 @@ export const MviScreenSimulator: React.FC = () => {
           ...prev,
           cartCount: prev.cartCount + 1,
         }));
-        sendChannelEvent('ShowSnackbar', '¡Artículo agregado al carrito!');
+        sendChannelEvent('ShowSnackbar', tSim.addedToCart);
         break;
       }
 
@@ -186,7 +204,7 @@ export const MviScreenSimulator: React.FC = () => {
             isLoading: false,
             products: initialProducts,
           }));
-          sendChannelEvent('ShowSnackbar', 'Catálogo actualizado con éxito');
+          sendChannelEvent('ShowSnackbar', tSim.catalogUpdated);
         }, 600);
         break;
       }
@@ -297,11 +315,11 @@ export const MviScreenSimulator: React.FC = () => {
                 {state.isLoading ? (
                   <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2">
                     <RefreshCw className="w-5 h-5 animate-spin text-emerald-400" />
-                    <span>Cargando productos...</span>
+                    <span>{tSim.loadingProducts}</span>
                   </div>
                 ) : visibleProducts.length === 0 ? (
                   <div className="py-8 text-center text-slate-500 text-xs">
-                    No se encontraron productos
+                    {tSim.noProducts}
                   </div>
                 ) : (
                   visibleProducts.map((p) => (
@@ -329,7 +347,7 @@ export const MviScreenSimulator: React.FC = () => {
                         <button
                           onClick={() => onAction('OnFavoriteToggle', p.id)}
                           className="p-1.5 rounded-lg hover:bg-slate-800 text-slate-400 transition-colors"
-                          title="Favorito"
+                          title={tSim.favorite}
                         >
                           <Heart
                             className={`w-3.5 h-3.5 ${
@@ -387,7 +405,7 @@ export const MviScreenSimulator: React.FC = () => {
           <button
             onClick={() => onAction('OnRefresh')}
             className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700"
-            title="Refresh"
+            title={tSim.refreshTooltip}
           >
             <RefreshCw className="w-4 h-4" />
           </button>
