@@ -150,7 +150,7 @@ export const ComposeMistakesLab: React.FC = () => {
 
   return (
     <div className="space-y-12">
-      <section className="bg-gradient-to-b from-[#0f172a] via-[#0a0f1d] to-[#070b14] border-b border-slate-800/80 -mx-4 sm:-mx-6 px-4 sm:px-6 py-12">
+      <section className="bg-gradient-to-b from-surface-high via-surface to-surface-lowest -mx-4 sm:-mx-6 px-4 sm:px-6 py-16">
         <div className="max-w-6xl mx-auto space-y-5">
           <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
             <Sparkles className="w-4 h-4" />
@@ -158,7 +158,7 @@ export const ComposeMistakesLab: React.FC = () => {
           </div>
 
           <h2
-            className="text-3xl md:text-5xl font-extrabold tracking-tight text-white max-w-4xl"
+            className="text-4xl md:text-6xl font-display font-bold tracking-tight text-on-surface tracking-[-0.04em] max-w-4xl"
             style={{ textWrap: 'balance' }}
           >
             {t.title}
@@ -171,13 +171,13 @@ export const ComposeMistakesLab: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <a
               href="#mistakes-list"
-              className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold rounded-xl text-sm transition-all shadow-lg shadow-emerald-500/20"
+              className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(65,239,107,0.5)]"
             >
               {t.start}
             </a>
             <a
               href="#mistakes-source"
-              className="px-5 py-2.5 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl text-sm border border-slate-700 transition-all flex items-center gap-2"
+              className="px-6 py-2.5 bg-surface-high hover:bg-surface-highest text-on-surface font-semibold rounded-full text-sm transition-all flex items-center gap-2"
             >
               <BookOpen className="w-4 h-4 text-emerald-400" />
               <span>{t.about}</span>
@@ -205,25 +205,25 @@ export const ComposeMistakesLab: React.FC = () => {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={t.searchPlaceholder}
-                className="w-full sm:w-64 pl-9 pr-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/70"
+                className="w-full sm:w-64 pl-9 pr-3 py-2 rounded-xl bg-surface-low text-xs text-on-surface placeholder:text-slate-500 focus:outline-none"
               />
             </label>
 
             <button
               onClick={toggleAll}
-              className="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs font-semibold text-slate-300 transition-colors whitespace-nowrap"
+              className="px-3 py-2 rounded-full bg-surface-high hover:bg-surface-highest text-xs font-semibold text-on-surface transition-colors whitespace-nowrap"
             >
               {allFilteredExpanded ? t.collapseAll : t.expandAll}
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800 text-xs overflow-x-auto">
+        <div className="flex items-center gap-1 p-1 bg-surface-high/60 rounded-full text-xs overflow-x-auto">
           <button
             onClick={() => setCategory('all')}
             className={`px-3 py-1.5 rounded-md font-medium transition-colors whitespace-nowrap shrink-0 ${
               category === 'all'
-                ? 'bg-slate-800 text-white border border-slate-700/60'
+                ? 'bg-surface-highest text-on-surface'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -237,7 +237,7 @@ export const ComposeMistakesLab: React.FC = () => {
                 onClick={() => setCategory(item.id)}
                 className={`px-3 py-1.5 rounded-md font-medium transition-colors whitespace-nowrap shrink-0 ${
                   category === item.id
-                    ? 'bg-slate-800 text-white border border-slate-700/60'
+                    ? 'bg-surface-highest text-on-surface'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -250,7 +250,7 @@ export const ComposeMistakesLab: React.FC = () => {
 
       <section id="mistakes-list" className="space-y-3 pb-4">
         {filteredMistakes.length === 0 && (
-          <div className="p-8 rounded-2xl border border-slate-800 bg-[#0b1120] text-center space-y-2">
+          <div className="p-8 rounded-3xl bg-surface-low text-center space-y-2">
             <ShieldAlert className="w-8 h-8 text-slate-500 mx-auto" />
             <p className="text-sm text-slate-300">{t.empty}</p>
           </div>
@@ -262,8 +262,8 @@ export const ComposeMistakesLab: React.FC = () => {
           return (
             <article
               key={mistake.id}
-              className={`rounded-2xl border bg-[#0b1120] overflow-hidden transition-colors ${
-                isExpanded ? 'border-slate-700' : 'border-slate-800 hover:border-slate-700'
+              className={`rounded-3xl overflow-hidden transition-colors bg-surface-low ${
+                isExpanded ? 'bg-surface-container' : 'hover:bg-surface-container'
               }`}
             >
               <button
@@ -271,7 +271,7 @@ export const ComposeMistakesLab: React.FC = () => {
                 className="w-full text-left p-4 sm:p-5 flex items-start gap-4"
                 aria-expanded={isExpanded}
               >
-                <span className="w-9 h-9 shrink-0 rounded-xl bg-slate-900 border border-slate-700 text-emerald-400 font-mono text-sm font-bold flex items-center justify-center">
+                <span className="w-10 h-10 shrink-0 rounded-full bg-surface-high text-primary font-mono text-sm font-bold flex items-center justify-center">
                   {String(mistake.number).padStart(2, '0')}
                 </span>
 
@@ -297,16 +297,16 @@ export const ComposeMistakesLab: React.FC = () => {
               </button>
 
               {isExpanded && (
-                <div className="px-4 sm:px-5 pb-5 space-y-4 border-t border-slate-800/80 pt-4">
+                <div className="px-4 sm:px-5 pb-6 space-y-5 pt-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="p-3 rounded-xl bg-rose-950/20 border border-rose-900/50 space-y-1">
+                    <div className="p-4 rounded-2xl bg-rose-950/20 space-y-1">
                       <div className="flex items-center gap-1.5 text-rose-400 text-[11px] font-mono font-bold uppercase tracking-wider">
                         <AlertTriangle className="w-3.5 h-3.5" />
                         <span>{t.why}</span>
                       </div>
                       <p className="text-xs text-slate-300 leading-relaxed">{mistake.why[language]}</p>
                     </div>
-                    <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-900/50 space-y-1">
+                    <div className="p-4 rounded-2xl bg-emerald-950/20 space-y-1">
                       <div className="flex items-center gap-1.5 text-emerald-400 text-[11px] font-mono font-bold uppercase tracking-wider">
                         <Lightbulb className="w-3.5 h-3.5" />
                         <span>{t.fix}</span>
@@ -341,7 +341,7 @@ export const ComposeMistakesLab: React.FC = () => {
 
       <section
         id="mistakes-source"
-        className="pb-8 p-5 sm:p-6 rounded-2xl bg-[#0b1120] border border-slate-800 space-y-3"
+        className="pb-10 p-6 sm:p-8 rounded-3xl bg-surface-low space-y-4"
       >
         <div className="flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-emerald-400" />
