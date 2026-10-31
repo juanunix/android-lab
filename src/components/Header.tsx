@@ -2,6 +2,7 @@ import React from 'react';
 import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { Language } from '../i18n/types';
+import { APP_VERSION_LABEL } from '../config/version';
 
 export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes';
 
@@ -42,9 +43,12 @@ export const Header: React.FC<HeaderProps> = ({
             e.preventDefault();
             onNavigateSection('hero');
           }}
-          className="font-display text-lg font-bold tracking-tight text-on-surface whitespace-nowrap hover:text-primary transition-colors"
+          className="flex items-center gap-2 font-display text-lg font-bold tracking-tight text-on-surface whitespace-nowrap hover:text-brand transition-colors"
         >
-          Compose & MVI Lab
+          <span>Compose & MVI Lab</span>
+          <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-[10px] font-mono font-semibold tracking-wider text-brand">
+            {APP_VERSION_LABEL}
+          </span>
         </a>
 
         {/* Lab Switcher Toggle */}
@@ -53,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectLab('side_effects')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeLab === 'side_effects'
-                ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(65,239,107,0.22)]'
+                ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
@@ -64,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectLab('mvi')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeLab === 'mvi'
-                ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(65,239,107,0.22)]'
+                ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
@@ -76,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onSelectLab('mistakes')}
             className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeLab === 'mistakes'
-                ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(65,239,107,0.22)]'
+                ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
@@ -92,25 +96,25 @@ export const Header: React.FC<HeaderProps> = ({
           <>
             <button
               onClick={() => onNavigateSection('catalog')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.effects}
             </button>
             <button
               onClick={() => onNavigateSection('lifecycle')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.lifecycle}
             </button>
             <button
               onClick={() => onNavigateSection('matrix')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.matrix}
             </button>
             <button
               onClick={() => onNavigateSection('pitfalls')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {t.nav.pitfalls}
             </button>
@@ -119,31 +123,31 @@ export const Header: React.FC<HeaderProps> = ({
           <>
             <button
               onClick={() => onNavigateSection('udf')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               Ciclo UDF
             </button>
             <button
               onClick={() => onNavigateSection('simulator')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               Simulador MVI
             </button>
             <button
               onClick={() => onNavigateSection('channel-vs-state')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               Channel vs State
             </button>
             <button
               onClick={() => onNavigateSection('code-explorer')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               Plantillas de Código
             </button>
             <button
               onClick={() => onNavigateSection('rules')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               5 Reglas
             </button>
@@ -152,19 +156,19 @@ export const Header: React.FC<HeaderProps> = ({
           <>
             <button
               onClick={() => onNavigateSection('mistakes-list')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {mistakesLabels.navList}
             </button>
             <button
               onClick={() => onNavigateSection('mistakes-toolbar')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {mistakesLabels.navFilters}
             </button>
             <button
               onClick={() => onNavigateSection('mistakes-source')}
-              className="hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {mistakesLabels.navSource}
             </button>
@@ -183,7 +187,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setLanguage(item.id)}
               className={`px-2 py-1 rounded-full text-xs font-mono font-medium transition-all ${
                 language === item.id
-                  ? 'bg-primary/15 text-primary shadow-xs'
+                  ? 'bg-brand/15 text-brand shadow-xs'
                   : 'text-slate-400 hover:text-slate-200'
               }`}
               title={`Trocar idioma para ${item.label}`}
@@ -198,7 +202,7 @@ export const Header: React.FC<HeaderProps> = ({
         {activeLab === 'side_effects' ? (
           <button
             onClick={onOpenDecisionTree}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(65,239,107,0.5)]"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
           >
             <HelpCircle className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>{t.nav.whichToUse}</span>
@@ -206,7 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
         ) : activeLab === 'mvi' ? (
           <button
             onClick={() => onNavigateSection('generator')}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(65,239,107,0.5)]"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
           >
             <Code2 className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Generar MVI</span>
@@ -214,7 +218,7 @@ export const Header: React.FC<HeaderProps> = ({
         ) : (
           <button
             onClick={() => onNavigateSection('mistakes-list')}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(65,239,107,0.5)]"
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
           >
             <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>{mistakesLabels.cta}</span>

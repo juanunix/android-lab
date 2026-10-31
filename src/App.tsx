@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { LogItem, EffectCategory } from './types/sideEffects';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { APP_VERSION_LABEL } from './config/version';
 import { Header, ActiveLab } from './components/Header';
 import { CodeViewer } from './components/CodeViewer';
 import { LogcatTerminal } from './components/LogcatTerminal';
@@ -164,7 +165,7 @@ function AppContent() {
             <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => scrollToSection('catalog')}
-                className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(65,239,107,0.5)]"
+                className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(0,241,94,0.45)]"
               >
                 {t.hero.exploreBtn}
               </button>
@@ -255,7 +256,7 @@ function AppContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Interactive Android Mockup & Logcat */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-surface-low p-4 rounded-3xl space-y-4">
+            <div className="bg-surface-low p-4 rounded-2xl space-y-4">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -304,7 +305,7 @@ function AppContent() {
           {/* Right Column: Documentation, Kotlin Code, Parameters, Pitfalls */}
           <div className="lg:col-span-7 space-y-6">
             {/* Effect Description Card */}
-            <div className="bg-surface-low p-6 rounded-3xl space-y-4">
+            <div className="bg-surface-low p-6 rounded-2xl space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2 pb-4">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
@@ -407,7 +408,7 @@ function AppContent() {
             {/* Do's & Don'ts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* When to use */}
-              <div className="bg-surface-low p-5 rounded-3xl bg-gradient-to-b from-emerald-950/25 to-transparent space-y-3">
+              <div className="bg-surface-low p-5 rounded-2xl bg-gradient-to-b from-emerald-950/25 to-transparent space-y-3">
                 <div className="flex items-center gap-2 text-emerald-400">
                   <CheckCircle className="w-4 h-4 shrink-0" />
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono">
@@ -425,7 +426,7 @@ function AppContent() {
               </div>
 
               {/* Pitfalls */}
-              <div className="bg-surface-low p-5 rounded-3xl bg-gradient-to-b from-rose-950/20 to-transparent space-y-3">
+              <div className="bg-surface-low p-5 rounded-2xl bg-gradient-to-b from-rose-950/20 to-transparent space-y-3">
                 <div className="flex items-center gap-2 text-rose-400">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
                   <h4 className="text-xs font-bold uppercase tracking-wider font-mono">
@@ -464,7 +465,7 @@ function AppContent() {
             </p>
           </div>
 
-          <div className="rounded-3xl bg-surface-low overflow-hidden">
+          <div className="rounded-2xl bg-surface-low overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead className="bg-[#080d19] border-b border-slate-800 text-slate-400 font-mono">
@@ -564,7 +565,7 @@ function AppContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
+            <div className="p-6 rounded-2xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">1</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule1Title}
@@ -574,7 +575,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
+            <div className="p-6 rounded-2xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">2</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule2Title}
@@ -584,7 +585,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
+            <div className="p-6 rounded-2xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">3</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule3Title}
@@ -594,7 +595,7 @@ function AppContent() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-surface-low space-y-3">
+            <div className="p-6 rounded-2xl bg-surface-low space-y-3">
               <span className="text-xs font-mono text-emerald-400 font-bold">4</span>
               <h4 className="text-sm font-bold text-white">
                 {t.pitfallsSection.rules.rule4Title}
@@ -614,6 +615,9 @@ function AppContent() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>{t.footer.copy}</p>
           <div className="flex items-center gap-4 text-slate-400">
+            <span className="px-2.5 py-1 rounded-full bg-surface-container text-[10px] font-mono font-semibold tracking-wider text-brand">
+              {APP_VERSION_LABEL}
+            </span>
             <button
               onClick={() => setIsDecisionModalOpen(true)}
               className="hover:text-emerald-400 transition-colors"

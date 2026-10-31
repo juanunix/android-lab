@@ -4,7 +4,6 @@ import {
   BookOpen,
   CheckCircle2,
   ChevronDown,
-  ExternalLink,
   Lightbulb,
   Search,
   ShieldAlert,
@@ -15,6 +14,7 @@ import { COMPOSE_MISTAKES, MISTAKE_CATEGORIES } from '../../data/composeMistakes
 import { MistakeCategory } from '../../types/mistakes';
 import { useLanguage } from '../../context/LanguageContext';
 import { CodeViewer } from '../CodeViewer';
+import { APP_VERSION_LABEL } from '../../config/version';
 
 const UI = {
   es: {
@@ -22,7 +22,7 @@ const UI = {
     title: '20 cosas que NUNCA deberías hacer en Jetpack Compose',
     subtitle:
       'Una guía interactiva de los errores más comunes al construir UI con Compose. Cada tarjeta compara el código problemático con la solución recomendada.',
-    byline: 'Basado en la guía de Philipp Lackner (PL Coding)',
+    byline: 'Basado en patrones y buenas prácticas de la comunidad de Jetpack Compose',
     start: 'Ver los 20 errores',
     about: 'Sobre esta colección',
     filtersTitle: 'Filtrar por categoría',
@@ -41,14 +41,13 @@ const UI = {
       'Esta sección recopila los 20 errores más comunes al trabajar con Jetpack Compose. Úsala como checklist antes de dar por terminada una pantalla: composición, estado, listas, rendimiento, arquitectura, ciclo de vida y accesibilidad.',
     footerNote:
       'Cada ejemplo se centra únicamente en el error mostrado; un proyecto real puede requerir otros ajustes.',
-    sourceLink: 'Ver el curso original',
   },
   pt: {
     kicker: 'Jetpack Compose · Boas Práticas',
     title: '20 coisas que você NUNCA deve fazer no Jetpack Compose',
     subtitle:
       'Um guia interativo dos erros mais comuns ao construir UI com Compose. Cada card compara o código problemático com a solução recomendada.',
-    byline: 'Baseado no guia de Philipp Lackner (PL Coding)',
+    byline: 'Baseado em padrões e boas práticas da comunidade Jetpack Compose',
     start: 'Ver os 20 erros',
     about: 'Sobre esta coleção',
     filtersTitle: 'Filtrar por categoria',
@@ -67,14 +66,13 @@ const UI = {
       'Esta seção reúne os 20 erros mais comuns ao trabalhar com Jetpack Compose. Use-a como checklist antes de considerar uma tela pronta: composição, estado, listas, desempenho, arquitetura, ciclo de vida e acessibilidade.',
     footerNote:
       'Cada exemplo foca apenas no erro mostrado; um projeto real pode precisar de outros ajustes.',
-    sourceLink: 'Ver o curso original',
   },
   en: {
     kicker: 'Jetpack Compose · Best Practices',
     title: '20 things you should NEVER do in Jetpack Compose',
     subtitle:
       'An interactive checklist of the most common mistakes when building UI with Compose. Each card compares the problematic code with the recommended fix.',
-    byline: 'Based on Philipp Lackner’s guide (PL Coding)',
+    byline: 'Based on patterns and best practices from the Jetpack Compose community',
     start: 'See the 20 mistakes',
     about: 'About this collection',
     filtersTitle: 'Filter by category',
@@ -93,7 +91,6 @@ const UI = {
       'This section collects the 20 most common Compose mistakes. Use it as a checklist before shipping a screen: composition, state, lists, performance, architecture, lifecycle, and accessibility.',
     footerNote:
       'Each snippet focuses only on the mistake shown; production code may need additional changes.',
-    sourceLink: 'View the original course',
   },
 } as const;
 
@@ -171,7 +168,7 @@ export const ComposeMistakesLab: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 pt-1">
             <a
               href="#mistakes-list"
-              className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(65,239,107,0.5)]"
+              className="px-6 py-2.5 bg-primary hover:bg-primary-container text-on-primary font-semibold rounded-full text-sm transition-all shadow-[0_16px_40px_-16px_rgba(0,241,94,0.45)]"
             >
               {t.start}
             </a>
@@ -250,7 +247,7 @@ export const ComposeMistakesLab: React.FC = () => {
 
       <section id="mistakes-list" className="space-y-3 pb-4">
         {filteredMistakes.length === 0 && (
-          <div className="p-8 rounded-3xl bg-surface-low text-center space-y-2">
+          <div className="p-8 rounded-2xl bg-surface-low text-center space-y-2">
             <ShieldAlert className="w-8 h-8 text-slate-500 mx-auto" />
             <p className="text-sm text-slate-300">{t.empty}</p>
           </div>
@@ -262,7 +259,7 @@ export const ComposeMistakesLab: React.FC = () => {
           return (
             <article
               key={mistake.id}
-              className={`rounded-3xl overflow-hidden transition-colors bg-surface-low ${
+              className={`rounded-2xl overflow-hidden transition-colors bg-surface-low ${
                 isExpanded ? 'bg-surface-container' : 'hover:bg-surface-container'
               }`}
             >
@@ -271,7 +268,7 @@ export const ComposeMistakesLab: React.FC = () => {
                 className="w-full text-left p-4 sm:p-5 flex items-start gap-4"
                 aria-expanded={isExpanded}
               >
-                <span className="w-10 h-10 shrink-0 rounded-full bg-surface-high text-primary font-mono text-sm font-bold flex items-center justify-center">
+                <span className="w-10 h-10 shrink-0 rounded-full bg-surface-high text-brand font-mono text-sm font-bold flex items-center justify-center">
                   {String(mistake.number).padStart(2, '0')}
                 </span>
 
@@ -341,7 +338,7 @@ export const ComposeMistakesLab: React.FC = () => {
 
       <section
         id="mistakes-source"
-        className="pb-10 p-6 sm:p-8 rounded-3xl bg-surface-low space-y-4"
+        className="pb-10 p-6 sm:p-8 rounded-2xl bg-surface-low space-y-4"
       >
         <div className="flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-emerald-400" />
@@ -349,15 +346,12 @@ export const ComposeMistakesLab: React.FC = () => {
         </div>
         <p className="text-sm text-slate-300 leading-relaxed max-w-4xl">{t.sourceBody}</p>
         <p className="text-xs text-slate-500 leading-relaxed">{t.footerNote}</p>
-        <a
-          href="https://pl-coding.com/premium-courses"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
-        >
-          <span>{t.sourceLink}</span>
-          <ExternalLink className="w-3.5 h-3.5" />
-        </a>
+        <div className="flex items-center gap-2 pt-1">
+          <span className="ds-label text-on-surface-variant">Build</span>
+          <span className="px-3 py-1 rounded-full bg-surface-container text-brand font-mono text-xs font-semibold">
+            {APP_VERSION_LABEL}
+          </span>
+        </div>
       </section>
     </div>
   );
