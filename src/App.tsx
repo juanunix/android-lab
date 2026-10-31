@@ -122,6 +122,30 @@ function AppContent() {
     }
   };
 
+  const handleRotate = (orientation: 'portrait' | 'landscape') => {
+    const label =
+      orientation === 'landscape'
+        ? language === 'en'
+          ? 'landscape'
+          : language === 'pt'
+          ? 'paisagem'
+          : 'horizontal'
+        : language === 'en'
+        ? 'portrait'
+        : language === 'pt'
+        ? 'retrato'
+        : 'vertical';
+
+    const message =
+      language === 'en'
+        ? `Configuration change: device rotated to ${label}. Activity recreated; remember state is lost (ViewModel/rememberSaveable survives).`
+        : language === 'pt'
+        ? `Mudança de configuração: dispositivo girado para ${label}. Activity recriada; estado com remember é perdido (ViewModel/rememberSaveable sobrevive).`
+        : `Cambio de configuración: dispositivo rotado a ${label}. Activity recreada; el estado con remember se pierde (ViewModel/rememberSaveable sobrevive).`;
+
+    addLog('Configuration', 'WARN', message);
+  };
+
   return (
     <div className="min-h-screen bg-surface text-on-surface flex flex-col font-sans">
       {/* Top Bar with Lab Switcher & Language Switcher */}
@@ -270,7 +294,7 @@ function AppContent() {
               </div>
 
               {/* Phone Mockup Screen */}
-              <PhoneMockup appName={currentEffect.name}>
+              <PhoneMockup appName={currentEffect.name} onRotate={handleRotate}>
                 {selectedEffectId === 'launched-effect' && (
                   <LaunchedEffectDemo onLog={addLog} />
                 )}
