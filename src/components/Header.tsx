@@ -1,9 +1,9 @@
 import React from 'react';
-import { HelpCircle, Globe, Layers, Cpu, Code2 } from 'lucide-react';
+import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { Language } from '../i18n/types';
 
-export type ActiveLab = 'side_effects' | 'mvi';
+export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes';
 
 interface HeaderProps {
   activeLab: ActiveLab;
@@ -25,6 +25,12 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'pt', label: 'PT', flag: '🇧🇷' },
     { id: 'es', label: 'ES', flag: '🇪🇸' },
   ];
+
+  const mistakesLabels = {
+    es: { navList: 'Los 20 Errores', navFilters: 'Filtros', navSource: 'Fuente', cta: 'Empezar' },
+    pt: { navList: 'Os 20 Erros', navFilters: 'Filtros', navSource: 'Fonte', cta: 'Começar' },
+    en: { navList: 'The 20 Mistakes', navFilters: 'Filters', navSource: 'Source', cta: 'Start' },
+  }[language];
 
   return (
     <header className="flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 py-3.5 border-b border-slate-800 bg-[#0a0f1d]/90 backdrop-blur-md sticky top-0 z-40">
@@ -66,6 +72,17 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="hidden sm:inline">Arquitectura MVI</span>
             <span className="sm:hidden">MVI</span>
           </button>
+          <button
+            onClick={() => onSelectLab('mistakes')}
+            className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              activeLab === 'mistakes'
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span>Top 20</span>
+          </button>
         </div>
       </div>
 
@@ -98,7 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
               {t.nav.pitfalls}
             </button>
           </>
-        ) : (
+        ) : activeLab === 'mvi' ? (
           <>
             <button
               onClick={() => onNavigateSection('udf')}
@@ -129,6 +146,27 @@ export const Header: React.FC<HeaderProps> = ({
               className="hover:text-white transition-colors whitespace-nowrap shrink-0"
             >
               5 Reglas
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => onNavigateSection('mistakes-list')}
+              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
+            >
+              {mistakesLabels.navList}
+            </button>
+            <button
+              onClick={() => onNavigateSection('mistakes-toolbar')}
+              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
+            >
+              {mistakesLabels.navFilters}
+            </button>
+            <button
+              onClick={() => onNavigateSection('mistakes-source')}
+              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
+            >
+              {mistakesLabels.navSource}
             </button>
           </>
         )}
@@ -165,13 +203,21 @@ export const Header: React.FC<HeaderProps> = ({
             <HelpCircle className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>{t.nav.whichToUse}</span>
           </button>
-        ) : (
+        ) : activeLab === 'mvi' ? (
           <button
             onClick={() => onNavigateSection('generator')}
             className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-lg transition-colors whitespace-nowrap shrink-0 shadow-sm shadow-emerald-500/20"
           >
             <Code2 className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Generar MVI</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => onNavigateSection('mistakes-list')}
+            className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 text-xs font-semibold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-lg transition-colors whitespace-nowrap shrink-0 shadow-sm shadow-emerald-500/20"
+          >
+            <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>{mistakesLabels.cta}</span>
           </button>
         )}
       </div>

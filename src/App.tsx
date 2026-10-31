@@ -17,6 +17,7 @@ import { LifecycleDiagram } from './components/LifecycleDiagram';
 
 // MVI Architecture Lab Component
 import { MviLabMain } from './components/mvi/MviLabMain';
+import { ComposeMistakesLab } from './components/mistakes/ComposeMistakesLab';
 
 // Demos
 import { LaunchedEffectDemo } from './components/demos/LaunchedEffectDemo';
@@ -137,6 +138,10 @@ function AppContent() {
       {activeLab === 'mvi' ? (
         <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4 flex-1">
           <MviLabMain />
+        </main>
+      ) : activeLab === 'mistakes' ? (
+        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4 flex-1">
+          <ComposeMistakesLab />
         </main>
       ) : (
         <>
