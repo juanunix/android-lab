@@ -73,7 +73,7 @@ export const Header: React.FC<HeaderProps> = ({
   }[language];
 
   return (
-    <header className="site-header flex items-center justify-between gap-4 sm:gap-8 px-4 sm:px-6 py-4 bg-surface/80 backdrop-blur-2xl sticky top-0 z-40">
+    <header className="site-header flex flex-wrap items-center justify-between gap-x-4 gap-y-2 sm:gap-x-8 px-4 sm:px-6 py-4 bg-surface/80 backdrop-blur-2xl sticky top-0 z-40">
       {/* Zone 1: Single text element wordmark */}
       <div className="flex items-center gap-3 shrink-0">
         <a

@@ -478,7 +478,12 @@ function AppContent() {
 
         {/* Jetpack Compose Lifecycle Interactive Diagram */}
         <section id="lifecycle" className="pt-16">
-          <LifecycleDiagram onSelectEffect={handleSelectEffect} />
+          <LifecycleDiagram
+            onSelectEffect={(id) => {
+              handleSelectEffect(id);
+              scrollToSection('catalog');
+            }}
+          />
         </section>
 
         {/* Side-Effects Master Comparison Table */}
