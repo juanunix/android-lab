@@ -362,7 +362,7 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       categoryLabel: 'Estabilidad y Optimización',
       summary: 'Calcula un State derivado a partir de otros estados y solo dispara recomposición cuando el resultado calculado cambia.',
       description:
-        'Cuando un estado como el scroll offset cambia con cada píxel (60-120 veces por segundo), calcular directamente la visibilidad de un botón provocaría recomposiciones masivas. derivedStateOf garantiza que la recomposición SOLO ocurra cuando el resultado calculado cambia de false a true o viceversa.',
+        'Cuando un estado como el scroll offset cambia con cada píxel (60-120 veces por segundo), calcular directamente la visibilidad de un botón provocaría recomposiciones masivas. derivedStateOf garantiza que la recomposición SOLO ocurra cuando el resultado calculado cambia de false a true o viceversa. Es costoso: úsalo solo cuando el resultado cambie con menos frecuencia que sus entradas.',
       lifecycleStage: 'Solo notifica a los observadores cuando el resultado final de la expresión cambia.',
       kotlinSignature: 'fun <T> derivedStateOf(calculation: () -> T): State<T>',
       parameters: [
@@ -380,36 +380,48 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       commonPitfalls: [
         'Usar derivedStateOf para operaciones simples donde ambos estados cambian con la misma frecuencia.',
         'Olvidar remember { derivedStateOf { ... } }, recreando el objeto en cada recomposición.',
+        'Usar derivedStateOf para concatenar strings o cálculos triviales: añade sobrecarga sin evitar recomposiciones.',
       ],
       snippets: [
         {
-          title: 'Ejemplo: Botón "Scroll to Top" optimizado',
-          description: 'Evita recomponer el Composable en cada píxel de scroll.',
+          title: 'Ejemplo correcto: botón "Volver arriba"',
+          description: 'derivedStateOf evita recomposiciones mientras el primer ítem visible no cambie. Ejemplo adaptado de la guía oficial de Android.',
           code: `@Composable
-fun OptimizedListScreen() {
-    val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
+fun MessageList(messages: List<Message>) {
+    Box {
+        val listState = rememberLazyListState()
 
-    val showButton by remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex > 0
+        LazyColumn(state = listState) {
+            // ...
         }
-    }
 
-    Scaffold(
-        floatingActionButton = {
-            AnimatedVisibility(visible = showButton) {
-                FloatingActionButton(onClick = { scope.launch { listState.scrollToItem(0) } }) {
-                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Arriba")
-                }
+        // Mostrar el botón cuando el primer ítem visible deja de ser el primero.
+        // Usamos un estado derivado recordado para minimizar recomposiciones.
+        val showButton by remember {
+            derivedStateOf {
+                listState.firstVisibleItemIndex > 0
             }
         }
-    ) { padding ->
-        LazyColumn(state = listState, modifier = Modifier.padding(padding)) {
-            items(100) { index -> ItemRow(index) }
+
+        AnimatedVisibility(visible = showButton) {
+            ScrollToTopButton()
         }
     }
 }`,
+        },
+        {
+          title: 'Ejemplo incorrecto vs correcto',
+          description: 'No uses derivedStateOf para concatenaciones o cálculos triviales: añade sobrecarga sin evitar recomposiciones.',
+          code: `// MAL: derivedStateOf innecesario y costoso
+var firstName by remember { mutableStateOf("") }
+var lastName by remember { mutableStateOf("") }
+
+val fullNameBad by remember {
+    derivedStateOf { "$firstName $lastName" }
+}
+
+// BIEN: una expresión directa es suficiente
+val fullNameCorrect = "$firstName $lastName"`,
         },
       ],
     },
@@ -816,7 +828,7 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       categoryLabel: 'Estabilidade e Otimização',
       summary: 'Calcula um State derivado de outros estados e só dispara recomposição quando o resultado final calculado muda.',
       description:
-        'Quando um estado como scroll offset muda a cada pixel (60 a 120 vezes por segundo), calcular visibilidade diretamente causa recomposições contínuas. O derivedStateOf garante que a recomposição OCORRA APENAS quando o resultado final mudar de false para true ou vice-versa.',
+        'Quando um estado como scroll offset muda a cada pixel (60 a 120 vezes por segundo), calcular visibilidade diretamente causa recomposições contínuas. O derivedStateOf garante que a recomposição OCORRA APENAS quando o resultado final mudar de false para true ou vice-versa. Ele é caro: use apenas quando o resultado mudar com menos frequência que suas entradas.',
       lifecycleStage: 'Notifica os observadores somente quando o resultado final da expressão se altera.',
       kotlinSignature: 'fun <T> derivedStateOf(calculation: () -> T): State<T>',
       parameters: [
@@ -834,36 +846,48 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       commonPitfalls: [
         'Usar derivedStateOf em operações simples onde ambos os estados mudam na mesma frequência.',
         'Esquecer de usar remember { derivedStateOf { ... } }, recriando o objeto a cada recomposição.',
+        'Usar derivedStateOf para concatenar strings ou cálculos triviais: adiciona sobrecarga sem evitar recomposições.',
       ],
       snippets: [
         {
-          title: 'Exemplo: Botão "Scroll to Top" otimizado',
-          description: 'Evita recompor o Composable a cada pixel rolado.',
+          title: 'Exemplo correto: botão "Voltar ao topo"',
+          description: 'derivedStateOf evita recomposições enquanto o primeiro item visível não mudar. Exemplo adaptado do guia oficial do Android.',
           code: `@Composable
-fun OptimizedListScreen() {
-    val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
+fun MessageList(messages: List<Message>) {
+    Box {
+        val listState = rememberLazyListState()
 
-    val showButton by remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex > 0
+        LazyColumn(state = listState) {
+            // ...
         }
-    }
 
-    Scaffold(
-        floatingActionButton = {
-            AnimatedVisibility(visible = showButton) {
-                FloatingActionButton(onClick = { scope.launch { listState.scrollToItem(0) } }) {
-                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Subir")
-                }
+        // Mostrar o botão quando o primeiro item visível deixar de ser o primeiro.
+        // Usamos um estado derivado lembrado para minimizar recomposições.
+        val showButton by remember {
+            derivedStateOf {
+                listState.firstVisibleItemIndex > 0
             }
         }
-    ) { padding ->
-        LazyColumn(state = listState, modifier = Modifier.padding(padding)) {
-            items(100) { index -> ItemRow(index) }
+
+        AnimatedVisibility(visible = showButton) {
+            ScrollToTopButton()
         }
     }
 }`,
+        },
+        {
+          title: 'Exemplo incorreto vs correto',
+          description: 'Não use derivedStateOf para concatenações ou cálculos triviais: adiciona sobrecarga sem evitar recomposições.',
+          code: `// ERRADO: derivedStateOf desnecessário e caro
+var firstName by remember { mutableStateOf("") }
+var lastName by remember { mutableStateOf("") }
+
+val fullNameBad by remember {
+    derivedStateOf { "$firstName $lastName" }
+}
+
+// CERTO: uma expressão direta é suficiente
+val fullNameCorrect = "$firstName $lastName"`,
         },
       ],
     },
@@ -1270,7 +1294,7 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       categoryLabel: 'Stability & Optimization',
       summary: 'Derives State from other state objects, only notifying observers when the calculated result changes.',
       description:
-        'When a state like scroll pixel offset updates continuously (60-120 times/sec), calculating button visibility directly would cause non-stop recompositions. derivedStateOf ensures recomposition happens ONLY when the boolean condition flips from false to true or vice versa.',
+        'When a state like scroll pixel offset updates continuously (60-120 times/sec), calculating button visibility directly would cause non-stop recompositions. derivedStateOf ensures recomposition happens ONLY when the boolean condition flips from false to true or vice versa. It is expensive: use it only when the result changes less often than its inputs.',
       lifecycleStage: 'Notifies observers exclusively when the final computed result changes.',
       kotlinSignature: 'fun <T> derivedStateOf(calculation: () -> T): State<T>',
       parameters: [
@@ -1288,36 +1312,49 @@ fun ProductDetailScreen(productId: String, repository: ProductRepository) {
       commonPitfalls: [
         'Using derivedStateOf for trivial calculations where both inputs and outputs update at identical rates.',
         'Omitting remember { derivedStateOf { ... } }, causing object re-creation on every pass.',
+        'Using derivedStateOf for string concatenation or trivial math: it adds overhead without avoiding recompositions.',
       ],
       snippets: [
         {
-          title: 'Example: Optimized "Scroll to Top" FAB',
-          description: 'Prevents recomposing the screen on every individual scroll pixel.',
+          title: 'Correct example: "Scroll to top" button',
+          description: 'derivedStateOf prevents recompositions while the first visible item does not change. Adapted from the official Android guide.',
           code: `@Composable
-fun OptimizedListScreen() {
-    val listState = rememberLazyListState()
-    val scope = rememberCoroutineScope()
+fun MessageList(messages: List<Message>) {
+    Box {
+        val listState = rememberLazyListState()
 
-    val showButton by remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex > 0
+        LazyColumn(state = listState) {
+            // ...
         }
-    }
 
-    Scaffold(
-        floatingActionButton = {
-            AnimatedVisibility(visible = showButton) {
-                FloatingActionButton(onClick = { scope.launch { listState.scrollToItem(0) } }) {
-                    Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Scroll top")
-                }
+        // Show the button if the first visible item is past
+        // the first item. We use a remembered derived state to
+        // minimize unnecessary compositions.
+        val showButton by remember {
+            derivedStateOf {
+                listState.firstVisibleItemIndex > 0
             }
         }
-    ) { padding ->
-        LazyColumn(state = listState, modifier = Modifier.padding(padding)) {
-            items(100) { index -> ItemRow(index) }
+
+        AnimatedVisibility(visible = showButton) {
+            ScrollToTopButton()
         }
     }
 }`,
+        },
+        {
+          title: 'Incorrect vs correct example',
+          description: 'Do not use derivedStateOf for concatenation or trivial calculations: it adds overhead without avoiding recompositions.',
+          code: `// BAD: unnecessary and expensive derivedStateOf
+var firstName by remember { mutableStateOf("") }
+var lastName by remember { mutableStateOf("") }
+
+val fullNameBad by remember {
+    derivedStateOf { "$firstName $lastName" }
+}
+
+// GOOD: a direct expression is enough
+val fullNameCorrect = "$firstName $lastName"`,
         },
       ],
     },
