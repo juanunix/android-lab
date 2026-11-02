@@ -12,6 +12,7 @@ import { useSkillAuth } from '../../context/SkillAuthContext';
 import { SKILLS, getSkill } from '../../data/skills';
 import { SkillId } from '../../types/skills';
 import { SkillsLogin } from './SkillsLogin';
+import { SKILL_COMPONENTS } from './registry';
 import { ProgressBadge, SkillSection } from './shared/primitives';
 
 const PROGRESS_KEY = 'compose_lab_skills_visited';
@@ -144,6 +145,7 @@ export const SkillsLab: React.FC = () => {
   }, [activeSkillId, isAuthenticated]);
 
   const activeSkill = useMemo(() => getSkill(activeSkillId), [activeSkillId]);
+  const ActiveSection = SKILL_COMPONENTS[activeSkillId];
 
   if (!isAuthenticated) {
     return (
@@ -255,7 +257,11 @@ export const SkillsLab: React.FC = () => {
         </aside>
 
         <main className="lg:col-span-8 xl:col-span-9 space-y-8">
-          {activeSkill && <SkillPlaceholder skillId={activeSkill.id} />}
+          {ActiveSection ? (
+            <ActiveSection />
+          ) : (
+            activeSkill && <SkillPlaceholder skillId={activeSkill.id} />
+          )}
 
           <SkillSection
             id="skills-source"
