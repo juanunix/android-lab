@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useDesignSystem } from '../context/ThemeContext';
 import { Language } from '../i18n/types';
 import { APP_VERSION_LABEL } from '../config/version';
-import { SITE_NAME } from '../config/site';
+import { SITE_NAME, SKILLS_ENABLED } from '../config/site';
 
 export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes' | 'skills';
 
@@ -49,7 +49,6 @@ export const Header: React.FC<HeaderProps> = ({
       themeToggle: 'Cambiar design system',
       skillsTab: 'Skills',
       skillsCatalog: 'Skills',
-      skillsSource: 'Fuente',
       skillsCta: 'Explorar',
     },
     pt: {
@@ -64,7 +63,6 @@ export const Header: React.FC<HeaderProps> = ({
       themeToggle: 'Trocar design system',
       skillsTab: 'Skills',
       skillsCatalog: 'Skills',
-      skillsSource: 'Fonte',
       skillsCta: 'Explorar',
     },
     en: {
@@ -79,7 +77,6 @@ export const Header: React.FC<HeaderProps> = ({
       themeToggle: 'Switch design system',
       skillsTab: 'Skills',
       skillsCatalog: 'Skills',
-      skillsSource: 'Source',
       skillsCta: 'Explore',
     },
   }[language];
@@ -138,17 +135,19 @@ export const Header: React.FC<HeaderProps> = ({
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Top 20</span>
           </button>
-          <button
-            onClick={() => onSelectLab('skills')}
-            className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-              activeLab === 'skills'
-                ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
-                : 'text-on-surface-variant hover:text-on-surface'
-            }`}
-          >
-            <Lock className="w-3.5 h-3.5" />
-            <span>{headerLabels.skillsTab}</span>
-          </button>
+          {SKILLS_ENABLED && (
+            <button
+              onClick={() => onSelectLab('skills')}
+              className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                activeLab === 'skills'
+                  ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
+                  : 'text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>{headerLabels.skillsTab}</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -242,12 +241,6 @@ export const Header: React.FC<HeaderProps> = ({
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {headerLabels.skillsCatalog}
-            </button>
-            <button
-              onClick={() => onNavigateSection('skills-source')}
-              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
-            >
-              {headerLabels.skillsSource}
             </button>
           </>
         )}
