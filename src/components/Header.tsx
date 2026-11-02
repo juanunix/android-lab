@@ -1,12 +1,12 @@
 import React from 'react';
-import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles, Palette } from 'lucide-react';
+import { HelpCircle, Globe, Layers, Cpu, Code2, AlertTriangle, Sparkles, Palette, Lock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDesignSystem } from '../context/ThemeContext';
 import { Language } from '../i18n/types';
 import { APP_VERSION_LABEL } from '../config/version';
 import { SITE_NAME } from '../config/site';
 
-export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes';
+export type ActiveLab = 'side_effects' | 'mvi' | 'mistakes' | 'skills';
 
 interface HeaderProps {
   activeLab: ActiveLab;
@@ -47,6 +47,10 @@ export const Header: React.FC<HeaderProps> = ({
       generate: 'Generar MVI',
       languagePrefix: 'Cambiar idioma a',
       themeToggle: 'Cambiar design system',
+      skillsTab: 'Skills',
+      skillsCatalog: 'Skills',
+      skillsSource: 'Fuente',
+      skillsCta: 'Explorar',
     },
     pt: {
       mviTab: 'Arquitetura MVI',
@@ -58,6 +62,10 @@ export const Header: React.FC<HeaderProps> = ({
       generate: 'Gerar MVI',
       languagePrefix: 'Trocar idioma para',
       themeToggle: 'Trocar design system',
+      skillsTab: 'Skills',
+      skillsCatalog: 'Skills',
+      skillsSource: 'Fonte',
+      skillsCta: 'Explorar',
     },
     en: {
       mviTab: 'MVI Architecture',
@@ -69,6 +77,10 @@ export const Header: React.FC<HeaderProps> = ({
       generate: 'Generate MVI',
       languagePrefix: 'Switch language to',
       themeToggle: 'Switch design system',
+      skillsTab: 'Skills',
+      skillsCatalog: 'Skills',
+      skillsSource: 'Source',
+      skillsCta: 'Explore',
     },
   }[language];
 
@@ -125,6 +137,17 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Top 20</span>
+          </button>
+          <button
+            onClick={() => onSelectLab('skills')}
+            className={`px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
+              activeLab === 'skills'
+                ? 'bg-brand text-on-brand shadow-[0_0_24px_rgba(0,241,94,0.2)]'
+                : 'text-on-surface-variant hover:text-on-surface'
+            }`}
+          >
+            <Lock className="w-3.5 h-3.5" />
+            <span>{headerLabels.skillsTab}</span>
           </button>
         </div>
       </div>
@@ -191,7 +214,7 @@ export const Header: React.FC<HeaderProps> = ({
               {headerLabels.rules}
             </button>
           </>
-        ) : (
+        ) : activeLab === 'mistakes' ? (
           <>
             <button
               onClick={() => onNavigateSection('mistakes-list')}
@@ -210,6 +233,21 @@ export const Header: React.FC<HeaderProps> = ({
               className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
             >
               {mistakesLabels.navSource}
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => onNavigateSection('skills-catalog')}
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
+            >
+              {headerLabels.skillsCatalog}
+            </button>
+            <button
+              onClick={() => onNavigateSection('skills-source')}
+              className="hover:text-brand transition-colors whitespace-nowrap shrink-0"
+            >
+              {headerLabels.skillsSource}
             </button>
           </>
         )}
@@ -264,13 +302,21 @@ export const Header: React.FC<HeaderProps> = ({
             <Code2 className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>{headerLabels.generate}</span>
           </button>
-        ) : (
+        ) : activeLab === 'mistakes' ? (
           <button
             onClick={() => onNavigateSection('mistakes-list')}
             className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
           >
             <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>{mistakesLabels.cta}</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => onNavigateSection('skills-catalog')}
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-on-primary bg-primary hover:bg-primary-container rounded-full transition-colors whitespace-nowrap shrink-0 shadow-[0_8px_24px_-8px_rgba(0,241,94,0.45)]"
+          >
+            <Lock className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>{headerLabels.skillsCta}</span>
           </button>
         )}
       </div>
