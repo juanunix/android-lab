@@ -21,6 +21,8 @@ import { LifecycleDiagram } from './components/LifecycleDiagram';
 // MVI Architecture Lab Component
 import { MviLabMain } from './components/mvi/MviLabMain';
 import { ComposeMistakesLab } from './components/mistakes/ComposeMistakesLab';
+import { SkillsLab } from './components/skills/SkillsLab';
+import { SkillAuthProvider } from './context/SkillAuthContext';
 
 // Demos
 import { LaunchedEffectDemo } from './components/demos/LaunchedEffectDemo';
@@ -171,6 +173,10 @@ function AppContent() {
       ) : activeLab === 'mistakes' ? (
         <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4 flex-1">
           <ComposeMistakesLab />
+        </main>
+      ) : activeLab === 'skills' ? (
+        <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-4 flex-1">
+          <SkillsLab />
         </main>
       ) : (
         <>
@@ -686,7 +692,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AppContent />
+        <SkillAuthProvider>
+          <AppContent />
+        </SkillAuthProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
