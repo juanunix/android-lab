@@ -1,19 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  BookOpen,
-  CheckCircle2,
-  ExternalLink,
-  Lock,
-  LogOut,
-  Sparkles,
-} from 'lucide-react';
+import { CheckCircle2, Lock, LogOut, Sparkles } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useSkillAuth } from '../../context/SkillAuthContext';
 import { SKILLS, getSkill } from '../../data/skills';
 import { SkillId } from '../../types/skills';
 import { SkillsLogin } from './SkillsLogin';
 import { SKILL_COMPONENTS } from './registry';
-import { ProgressBadge, SkillSection } from './shared/primitives';
+import { ProgressBadge } from './shared/primitives';
 
 const PROGRESS_KEY = 'compose_lab_skills_visited';
 
@@ -97,9 +90,6 @@ export const SkillsLab: React.FC = () => {
       progress: 'Progreso',
       logout: 'Cerrar sesión',
       catalog: 'Skills disponibles',
-      source: 'Contenido adaptado de Marky Skills',
-      sourceLink: 'Ver repositorio original',
-      openSource: 'Abrir fuente',
     },
     pt: {
       kicker: 'Marky Skills · Aprendizado interativo',
@@ -110,9 +100,6 @@ export const SkillsLab: React.FC = () => {
       progress: 'Progresso',
       logout: 'Sair',
       catalog: 'Skills disponíveis',
-      source: 'Conteúdo adaptado do Marky Skills',
-      sourceLink: 'Ver repositório original',
-      openSource: 'Abrir fonte',
     },
     en: {
       kicker: 'Marky Skills · Interactive learning',
@@ -123,10 +110,8 @@ export const SkillsLab: React.FC = () => {
       progress: 'Progress',
       logout: 'Log out',
       catalog: 'Available skills',
-      source: 'Content adapted from Marky Skills',
-      sourceLink: 'View original repository',
-      openSource: 'Open source',
     },
+
   }[language];
 
   useEffect(() => {
@@ -152,24 +137,6 @@ export const SkillsLab: React.FC = () => {
       <div className="space-y-8">
         <div id="skills-catalog" />
         <SkillsLogin />
-        <section
-          id="skills-source"
-          className="p-6 rounded-2xl bg-surface-low flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-        >
-          <div className="flex items-center gap-2 text-xs text-on-surface-variant">
-            <BookOpen className="w-4 h-4 text-brand" />
-            <span>{t.source}</span>
-          </div>
-          <a
-            href="https://github.com/philipplackner/Marky/tree/master/.claude/skills"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand hover:text-brand-container"
-          >
-            <span>{t.sourceLink}</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        </section>
       </div>
     );
   }
@@ -262,23 +229,6 @@ export const SkillsLab: React.FC = () => {
           ) : (
             activeSkill && <SkillPlaceholder skillId={activeSkill.id} />
           )}
-
-          <SkillSection
-            id="skills-source"
-            eyebrow={t.source}
-            title={t.source}
-            description={activeSkill?.summary[language]}
-          >
-            <a
-              href="https://github.com/philipplackner/Marky/tree/master/.claude/skills"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand hover:text-brand-container"
-            >
-              <span>{t.sourceLink}</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </SkillSection>
         </main>
       </div>
     </div>

@@ -199,6 +199,82 @@ export const Quiz: React.FC<QuizProps> = ({ question, options, correctIndex, exp
   );
 };
 
+interface PickerRowProps {
+  label: string;
+  example?: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  labels: { correct: string; incorrect: string };
+}
+
+export const PickerRow: React.FC<PickerRowProps> = ({
+  label,
+  example,
+  options,
+  correctIndex,
+  explanation,
+  labels,
+}) => {
+  const [selected, setSelected] = useState<number | null>(null);
+  const answered = selected !== null;
+  const isCorrect = selected === correctIndex;
+
+  return (
+    <div
+      className={`p-3 rounded-xl border transition-colors space-y-2 ${
+        !answered
+          ? 'border-transparent bg-surface-lowest'
+          : isCorrect
+          ? 'border-brand/40 bg-brand/10'
+          : 'border-rose-500/40 bg-rose-500/10'
+      }`}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-[11px] font-semibold text-on-surface">{label}</p>
+          {example && <p className="text-[10px] font-mono text-on-surface-variant mt-0.5">{example}</p>}
+        </div>
+        <div className="flex gap-1.5 shrink-0 flex-wrap">
+          {options.map((option, index) => {
+            const chosen = selected === index;
+            const revealCorrect = answered && index === correctIndex;
+            return (
+              <button
+                key={option}
+                onClick={() => setSelected(index)}
+                disabled={answered}
+                className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-bold transition-colors ${
+                  revealCorrect
+                    ? 'bg-brand text-on-brand'
+                    : chosen && !isCorrect
+                    ? 'bg-rose-500/30 text-on-surface'
+                    : 'bg-surface-high text-on-surface-variant hover:text-on-surface'
+                }`}
+              >
+                {option}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      {answered && (
+        <p className="text-[10px] text-on-surface-variant leading-relaxed flex items-start gap-1.5">
+          {isCorrect ? (
+            <CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0 mt-0.5" />
+          ) : (
+            <XCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />
+          )}
+          <span>
+            <span className="font-bold text-on-surface">{isCorrect ? labels.correct : labels.incorrect}. </span>
+            {explanation}
+          </span>
+        </p>
+      )}
+    </div>
+  );
+};
+
 interface ChecklistProps {
   title: string;
   items: string[];
